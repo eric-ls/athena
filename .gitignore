@@ -20,3 +20,5 @@
 # Ignore Byebug command history file.
 .byebug_history
 
+# Remember to replace info.plist with your own Facebook ID stuff
+/AwesomeProject/ios/AwesomeProject/Info.plist
