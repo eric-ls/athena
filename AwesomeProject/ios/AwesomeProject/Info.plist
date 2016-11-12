@@ -40,7 +40,7 @@
 	<string></string>
 	<key>NSAppTransportSecurity</key>
 	<!--See http://ste.vn/2015/06/10/configuring-app-transport-security-ios-9-osx-10-11/ -->
-  
+
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
@@ -51,18 +51,18 @@
 			</dict>
 		</dict>
 	</dict>
-  
+
   <key>CFBundleURLTypes</key>
   <array>
     <dict>
       <key>CFBundleURLSchemes</key>
       <array>
-        <string>fb814074752065604</string>
+        <string>fb1723671427954706</string>
       </array>
     </dict>
   </array>
   <key>FacebookAppID</key>
-  <string>814074752065604</string>
+  <string>1723671427954706</string>
   <key>FacebookDisplayName</key>
   <string>CalHacks-2016</string>
   <key>LSApplicationQueriesSchemes</key>
