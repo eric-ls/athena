@@ -99,8 +99,8 @@ class UserProfile extends Component {
     return (
       <View style={s.profileContainer}>
         <Image source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
-       style={{width: 150, height: 150, marginBottom: 20,}} />
-        <Text style={{textAlign: 'center', fontWeight: '700'}}>{this.props.name}</Text>
+       style={{width: 150, height: 150, marginBottom: 20, borderRadius: 7}} />
+        <Text style={{textAlign: 'center', fontWeight: '700', fontSize: 18}}>{this.props.name}</Text>
         <Text style={{textAlign: 'center'}}>{this.props.location}</Text>
       </View>
     )
