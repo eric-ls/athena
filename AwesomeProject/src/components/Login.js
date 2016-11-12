@@ -38,6 +38,7 @@ export default class Login extends Component {
       this.setState({
         name: result.name,
         email: result.email,
+        facebook_id: result.facebook_id,
       });
     }
   }
@@ -70,10 +71,14 @@ export default class Login extends Component {
           permissions={["email","user_friends"]}
           loginBehavior={FBLoginManager.LoginBehaviors.Native}
           onLogin={function(data){
-            _this.setState({ user : data.credentials });
+            // _this.setState({ user : data.credentials });
             _this._setLoggedIn(true);
-            console.log("on login");
-            // Backend.sendUserData(_this.state.user);
+            // console.log("on login");
+            Backend.sendUserData(
+              _this.state.name,
+              _this.state.email,
+              _this.state.facebook_id,
+            );
 
             _this._handlePress();
           }}

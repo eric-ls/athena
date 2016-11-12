@@ -54,22 +54,31 @@ class Backend {
     }
   }
 
-  // send user data to the Backend
-  async sendUserData(credentials) {
-
-    // let response = await fetch('https://graph.facebook.com/me?access_token=' + token);
-    // console.log(response);
-
+  // send user data to the Backend to get a User Object back
+  async sendUserData(name, email, facebook_id) {
    try {
-      var token = credentials.token;
-      var url = 'https://graph.facebook.com/me?fields=email&access_token=' + token;
-      let response = await fetch(url);
-      let responseJson = await response.json();
+      const url = 'http://localhost:3000/users';
+      let response = await fetch(url, {
+        method:'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: {
+            name: name,
+            email: email,
+            facebook_id: facebook_id,
+          }
+        })
+      });
       console.log(response);
     } catch(error) {
       console.error(error);
     }
   }
+
+
 }
 
 export default new Backend();
