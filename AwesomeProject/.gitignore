@@ -41,5 +41,5 @@ android/app/libs
 android/keystores/debug.keystore
 
 
-/ios/AwesomeProject/Info.plist
+*.plist
 
