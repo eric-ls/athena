@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 var {FBLogin, FBLoginManager} = require('react-native-facebook-login');
 
-class Login extends Component {
+export default class Login extends Component {
   render() {
     var _this = this;
     return (
@@ -14,6 +14,7 @@ class Login extends Component {
           console.log("Logged in!");
           console.log(data);
           _this.setState({ user : data.credentials });
+          _this.props.navigator.push({id: 1})
         }}
         onLogout={function(){
           console.log("Logged out.");

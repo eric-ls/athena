@@ -9,18 +9,26 @@ import {
   TouchableHighlight,
   Navigator
 } from 'react-native'
-import UserSlider from './js/slider'
-import Login from './js/login'
+import UserSlider from './js/slider.js'
+import Login from './js/login.js'
 
 class AwesomeProject extends Component {
+  _renderScene(route, navigator) {
+    if (route.id == 0) {
+      return <Login navigator={navigator}/>
+    } else if (route.id == 1) {
+      return <UserSlider navigator={navigator}/>
+    }
+    // TODO: Create the id == 2 case
+  }
+
   render() {
     return (
-      <View>
-        <Text>Welcome to the Facebook SDK for React Native!</Text>
-        <Login />
-        <UserSlider />
-      </View>
-    )
+      <Navigator
+        initialRoute={{ id: 0, }}
+        renderScene={this._renderScene}
+      />
+    );
   }
 }
 
