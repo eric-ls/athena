@@ -82,7 +82,7 @@ export default class UserSlider extends Component {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    paddingTop: 50,
+    paddingTop: 100,
     flex: 1,
     flexDirection: 'column',
     flexWrap: 'wrap',
