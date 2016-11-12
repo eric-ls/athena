@@ -4,6 +4,7 @@ import { Router, Scene } from 'react-native-router-flux';
 import Home from './components/Home';
 import Chat from './components/Chat';
 import Login from './components/Login';
+import Topics from './components/Topics';
 
 export default class App extends React.Component {
   render() {
@@ -12,6 +13,7 @@ export default class App extends React.Component {
         <Scene key='root'>
           <Scene key='login' title='Login' component={Login} initial={true} />
           <Scene key='home' title='Home' component={Home}/>
+          <Scene key='topics' title='Topics' component={Topics}/>
           <Scene key='chat' title='Chat' component={Chat}/>
         </Scene>
       </Router>
