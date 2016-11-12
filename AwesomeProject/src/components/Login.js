@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-import { View, Text } from 'react-native'
-import { Actions } from 'react-native-router-flux'
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import Backend from '../Backend';
 
 var {FBLogin, FBLoginManager} = require('react-native-facebook-login');
 
@@ -22,6 +23,7 @@ export default class Login extends Component {
             console.log("Logged in!");
             console.log(data);
             _this.setState({ user : data.credentials });
+            Backend.sendUserData(this.state.user);
             this._handlePress();
           }}
           onLogout={function(){
