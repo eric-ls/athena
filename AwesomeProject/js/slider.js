@@ -4,11 +4,12 @@ import {
   Text,
   Navigator,
   TouchableHighlight,
-  Slider,
   StyleSheet,
   AlertIOS,
 } from 'react-native';
+
 import Button from 'react-native-button';
+import Slider from 'react-native-slider';
 
 
 export default class UserSlider extends Component {
@@ -66,7 +67,8 @@ export default class UserSlider extends Component {
         <Slider
           onValueChange={this._updateSliderValue}
           value={this.state.value}
-          style={styles.slider} />
+          style={styles.slider}
+          thumbStyle={styles.thumbStyle}/>
         <Button
           containerStyle={styles.buttonContainerStyle}
           style={styles.buttonTextStyle}
@@ -107,6 +109,10 @@ const styles = StyleSheet.create({
   slider: {
     height: 50,
     marginBottom: 50,
+  },
+  thumbStyle: {
+    height: 25,
+    width: 10,
   },
   buttonContainerStyle: {
     padding: 10,
