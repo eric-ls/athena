@@ -22,7 +22,7 @@ export default class Login extends Component {
             console.log("Logged in!");
             console.log(data);
             _this.setState({ user : data.credentials });
-            this._handlePress();
+            _this._handlePress();
           }}
           onLogout={function(){
             console.log("Logged out.");
