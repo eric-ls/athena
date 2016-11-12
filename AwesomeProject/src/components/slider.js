@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Actions } from 'react-native-router-flux';
 import {
   View,
   Text,
@@ -53,7 +54,7 @@ export default class UserSlider extends Component {
   }
 
   _handlePress = () => {
-    AlertIOS.alert('Yay you pressed on the button');
+    Actions.chat({});
   }
 
   render() {
