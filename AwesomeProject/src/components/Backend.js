@@ -72,7 +72,10 @@ class Backend {
           }
         })
       });
-      console.log(response);
+      let res = await response.json();
+      console.log(res);
+      this.setUid(res.id);
+      console.log(this.getUid());
     } catch(error) {
       console.error(error);
     }
