@@ -1,3 +1,10 @@
+
+const FBSDK = require('react-native-fbsdk');
+const {
+  GraphRequest,
+  GraphRequestManager,
+} = FBSDK;
+
 class Backend {
   uid = '';
   messagesRef = null;
@@ -48,10 +55,20 @@ class Backend {
   }
 
   // send user data to the Backend
-  sendUserData(credentials) {
-    token = credentials.token
-    let response = await fetch('https://graph.facebook.com/me?access_token=' + token);
-    console.log(response);
+  async sendUserData(credentials) {
+
+    // let response = await fetch('https://graph.facebook.com/me?access_token=' + token);
+    // console.log(response);
+
+   try {
+      var token = credentials.token;
+      var url = 'https://graph.facebook.com/me?fields=email&access_token=' + token;
+      let response = await fetch(url);
+      let responseJson = await response.json();
+      console.log(response);
+    } catch(error) {
+      console.error(error);
+    }
   }
 }
 

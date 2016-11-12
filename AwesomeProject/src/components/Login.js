@@ -6,10 +6,17 @@ import { View,
 from 'react-native'
 import { Actions } from 'react-native-router-flux';
 import Button from 'react-native-button';
-import Backend from '../Backend';
+import Backend from './Backend';
+
+const FBSDK = require('react-native-fbsdk');
+const {
+  GraphRequest,
+  GraphRequestManager,
+} = FBSDK;
 
 
 var {FBLogin, FBLoginManager} = require('react-native-facebook-login');
+
 
 export default class Login extends Component {
   constructor(props) {
@@ -17,8 +24,35 @@ export default class Login extends Component {
 
     this.state = {
       loggedIn: false,
+      name: "name",
+      email: "email",
     };
   }
+
+  //Create response callback.
+  _responseInfoCallback = (error, result) => {
+    if (error) {
+      console.log('Error fetching data: ', error.toString());
+    } else {
+      console.log(result);
+      this.setState({
+        name: result.name,
+        email: result.email,
+      });
+    }
+  }
+
+  componentWillMount() {
+    // Create a graph request asking for user information with a callback to handle the response.
+    const infoRequest = new GraphRequest(
+      '/me?fields=name,email',
+      null,
+      this._responseInfoCallback
+    );
+    // Start the graph request.
+    new GraphRequestManager().addRequest(infoRequest).start();
+  }
+
 
   _handlePress = () => {
     Actions.home({});
@@ -38,8 +72,10 @@ export default class Login extends Component {
           onLogin={function(data){
             _this.setState({ user : data.credentials });
             _this._setLoggedIn(true);
-            Backend.sendUserData(this.state.user);
-            this._handlePress();
+            console.log("on login");
+            // Backend.sendUserData(_this.state.user);
+
+            _this._handlePress();
           }}
           onLogout={function(){
             _this._setLoggedIn(false);
@@ -68,8 +104,8 @@ export default class Login extends Component {
     let profile;
     if (this.state.loggedIn) {
       profile = <UserProfile
-                  name={"Eric Liang"}
-                  location={"Berkeley, CA"} />
+                  name={this.state.name}
+                  location={this.state.email} />
     } else {
       profile = <Text style={{marginBottom: 20,}}>Please log in!</Text>
     }

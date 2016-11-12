@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161112125828) do
+ActiveRecord::Schema.define(version: 20161112222358) do
 
   create_table "chats", force: :cascade do |t|
     t.integer  "user_1"
@@ -33,8 +33,9 @@ ActiveRecord::Schema.define(version: 20161112125828) do
     t.string   "email"
     t.string   "img_path"
     t.string   "token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "facebook_id"
   end
 
 end
