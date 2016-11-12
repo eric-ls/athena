@@ -10,6 +10,7 @@ var {FBLogin, FBLoginManager} = require('react-native-facebook-login');
 export default class Login extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props);
 
     this.state = { loggedIn: false, };
   }
@@ -17,34 +18,30 @@ export default class Login extends Component {
   render() {
     var _this = this;
     return (
-      <FBLogin style={{ marginBottom: 10, }}
+      <FBLogin style={{ marginBottom: 50, }}
         ref={(fbLogin) => { this.fbLogin = fbLogin }}
         permissions={["email","user_friends"]}
         loginBehavior={FBLoginManager.LoginBehaviors.Native}
         onLogin={function(data){
-          console.log("Logged in!");
-          console.log(data);
           _this.setState({
             user : data.credentials,
-            loggedIn : true,
           });
-          _this.props.navigator.push({id: 1})
+          _this.props.setLoggedIn(true);
         }}
         onLogout={function(){
-          console.log("Logged out.");
           _this.setState({ user : null });
+          _this.props.setLoggedIn(false);
         }}
         onLoginFound={function(data){
-          console.log("Existing login found.");
           console.log(data);
           _this.setState({
             user : data.credentials,
-            loggedIn : true,
           });
+          _this.props.setLoggedIn(true);
         }}
         onLoginNotFound={function(){
-          console.log("No user logged in.");
           _this.setState({ user : null });
+          _this.props.setLoggedIn(false);
         }}
         onError={function(data){
           console.log("ERROR");
