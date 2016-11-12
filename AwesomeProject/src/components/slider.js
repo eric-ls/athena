@@ -54,7 +54,7 @@ export default class UserSlider extends Component {
   }
 
   _handlePress = () => {
-    Actions.chat({});
+    Actions.topics({});
   }
 
   render() {
