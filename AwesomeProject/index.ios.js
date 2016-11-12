@@ -9,25 +9,14 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native';
+
+import UserSlider from './js/slider'
 
 export default class AwesomeProject extends Component {
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Presadsknjdasjkndasjkndasjkndanksjs Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
-    );
+    return <UserSlider />;
   }
 }
 
