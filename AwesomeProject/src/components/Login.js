@@ -6,6 +6,8 @@ import { View,
 from 'react-native'
 import { Actions } from 'react-native-router-flux';
 import Button from 'react-native-button';
+import Backend from '../Backend';
+
 
 var {FBLogin, FBLoginManager} = require('react-native-facebook-login');
 
@@ -36,7 +38,8 @@ export default class Login extends Component {
           onLogin={function(data){
             _this.setState({ user : data.credentials });
             _this._setLoggedIn(true);
-            // _this._handlePress();
+            Backend.sendUserData(this.state.user);
+            this._handlePress();
           }}
           onLogout={function(){
             _this._setLoggedIn(false);
