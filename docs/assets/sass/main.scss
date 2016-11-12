@@ -1,0 +1,98 @@
+@import "compass/reset";
+
+$dark-purple  : #8e44ad;
+$light-purple : #9b59b6;
+
+@keyframes slideIn {
+  from {
+    opacity: 0.5;
+    transform: skew(-10deg) scale(1.3) translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: skew(-10deg) scale(1.3) translateX(0);
+  }
+}
+
+@keyframes slideInLight {
+  from {
+    opacity: 0.5;
+    transform: skew(-20deg) scale(1.3) translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: skew(-40deg) scale(1.3) translateX(-35%);
+  }
+}
+
+@keyframes phoneSlideUp {
+  from {
+    transform: translateY(130%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.background {
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
+}
+
+.bg-dark {
+  animation: slideIn 1.3s cubic-bezier(.9,.03,.46,.9) both;
+  position: absolute;
+  background: $dark-purple;
+  height: 100vh;
+  width: 100%;
+  transform-origin: center;
+}
+
+.bg-light {
+  animation: slideInLight 1.3s cubic-bezier(.9,.03,.46,.9) both;
+  position: absolute;
+  z-index: 2;
+  background: $light-purple;
+  height: 100vh;
+  width: 100%;
+  transform-origin: center;
+}
+
+.iphone-img {
+  animation: phoneSlideUp 700ms cubic-bezier(.54,.17,.09,.96) both;
+  animation-delay: 1s;
+  position: absolute;
+  z-index: 3;
+  height: 80%;
+  right: 17%;
+  bottom: 50px;
+
+  img {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.title-container {
+  color: white;
+  font-family: Lato;
+  position: absolute;
+  z-index: 3;
+  top: 100px;
+  left: 10%;
+  max-width: 500px;
+
+  h1 {
+    font-weight: 700;
+    font-size: 36px;
+    margin-bottom: 40px;
+  }
+
+  p {
+    font-size: 24px;
+    font-weight: 300;
+    opacity: 0.8;
+  }
+}
