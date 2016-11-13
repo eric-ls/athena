@@ -62,6 +62,7 @@ export default class ProfilePage extends Component {
                  style={s.profileImg} />
           <Text style={s.name}>{this.state.name}</Text>
           <Text style={s.subtitle}>{this.state.gender}, {age}</Text>
+          <Text style={s.bio}>My Self Summary: {this.state.gender}</Text>
         </View>
       </View>
     )
@@ -81,7 +82,7 @@ const s = StyleSheet.create({
     height: 140,
     borderColor: 'white',
     borderWidth: 5,
-    marginBottom: 20,
+    marginBottom: 10,
     borderRadius: 8,
   },
   name: {
@@ -94,5 +95,12 @@ const s = StyleSheet.create({
     fontSize: 16,
     color: '#3C4858',
     opacity: 0.8,
+  },
+  bio: {
+    fontSize: 16,
+    color: '#7C4858',
+    opacity: 0.8,
+    marginTop: 20,
+    width: 350,
   }
 })

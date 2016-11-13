@@ -38,7 +38,7 @@ export default class UserSlider extends Component {
 
   _updateSliderValue = (value) => {
     let leaning;
-    if (value <= 0.10) {
+    if (value <= 0.10) { // TODO: More left is liberal.
       leaning = 'Very Conservative';
     } else if (value <= 0.25) {
       leaning = 'Mostly Conservative';
