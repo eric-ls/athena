@@ -17,7 +17,7 @@ const {
 
 var {FBLogin, FBLoginManager} = require('react-native-facebook-login');
 
-export default class Login extends Component {
+export default class Landing extends Component {
   constructor(props) {
     super(props);
 
@@ -71,18 +71,16 @@ export default class Login extends Component {
           permissions={["email","user_friends","public_profile"]}
           loginBehavior={FBLoginManager.LoginBehaviors.Native}
           onLogin={function(data){
-            if (_this.state.name != "name") {
-              _this._setLoggedIn(true);
-              Backend.sendUserData(
-                _this.state.name,
-                _this.state.email,
-                data.credentials.userId, // facebook user id
-                data.credentials.token,
-              ).then(user_id => {
-                AsyncStorage.setItem("user_id", user_id.toString());
-                _this._handlePress();
-              });
-            }
+            _this._setLoggedIn(true);
+            Backend.sendUserData(
+              _this.state.name,
+              _this.state.email,
+              data.credentials.userId, // facebook user id
+              data.credentials.token,
+            ).then(user_id => {
+              AsyncStorage.setItem("user_id", user_id.toString());
+              _this._handlePress();
+            });
           }}
           onLogout={function(){
             _this._setLoggedIn(false);
@@ -120,22 +118,33 @@ export default class Login extends Component {
 
     return (
       <View style={s.loginContainer}>
+        <Image // TODO: Background image
+          source={{uri: 'https://charliesanjaya.files.wordpress.com/2015/10/mar15_23_emapthy.png'}}
+          style={{width: 150, height: 150, marginBottom: 20, borderRadius: 7}} />
         <Text style={s.loginTitle}>Athena</Text>
-        {profile}
-        {loginBtn}
+        <Image
+          source={{uri: 'https://charliesanjaya.files.wordpress.com/2015/10/mar15_23_emapthy.png'}}
+          style={{width: 150, height: 150, marginBottom: 20, borderRadius: 7}} />
         <Button
-          disabled={!this.state.loggedIn}
           styleDisabled={{opacity: 0.4}}
           containerStyle={s.buttonContainerStyle}
           style={s.buttonTextStyle}
-          onPress={this._handlePress}
-          >Continue</Button>
+          onPress={this._handlePress}>
+            Log In
+        </Button>
+        <Button
+          styleDisabled={{opacity: 0.4}}
+          containerStyle={s.buttonContainerStyle}
+          style={s.buttonTextStyle}
+          onPress={this._handlePress}>
+            Sign Up
+        </Button>
       </View>
     );
   }
 }
 
-class UserProfile extends Component {
+class AthenaPicture extends Component {
   constructor(props) {
     super(props);
 

@@ -9,14 +9,21 @@ import {
   Dimensions,
   AsyncStorage,
 } from 'react-native'
+import PopupDialog, {
+  DialogTitle,
+  SlideAnimation,
+  DialogButton
+} from 'react-native-popup-dialog';
 import { Actions } from 'react-native-router-flux';
 import Button from 'react-native-button';
 import Backend from './Backend';
 
+const popupAnimation = new SlideAnimation({ slideFrom: 'bottom' });
+
 export default class Topics extends Component {
   constructor(props) {
     super(props);
-    this.state = { selectedTopics: [] };
+    this.state = { selectedTopics: [], dialogIsOpen: false };
   }
 
   _handleNextView = () => {
@@ -73,6 +80,10 @@ export default class Topics extends Component {
     }
   }
 
+  openPopupDialog = () => {
+    this.popupDialog.openDialog();
+  }
+
   render() {
     let topics = this.topics.map((topic, index) => {
       let icon = this.imgurl[topic];
@@ -86,6 +97,37 @@ export default class Topics extends Component {
       )
     })
 
+    let popup = (
+      <PopupDialog
+        ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+        dialogAnimation = { popupAnimation }
+        onClosed={this._handleNextView}
+        width={0.9}
+        dialogStyle={{borderRadius: 3,}}
+        >
+        <View style={s.popupContainer}>
+          <View style={{flex: 1}}>
+            <Image source={require('../img/smile.png')} style={{width: 50, height: 50, alignSelf: 'center'}} />
+            <Text style={s.popupTitle}>A Friendly Reminder</Text>
+            <View style={{flex: 1,}}>
+              <Text style={s.popupText}>• Remember that there's another person behind the screen</Text>
+              <Text style={s.popupText}>• Don't resort to personal attacks</Text>
+              <Text style={s.popupText}>• Keep an open mind to new ideas</Text>
+            </View>
+          </View>
+          <Button
+            onPress={() => {
+              this.state.dialogIsOpen = false;
+              this.popupDialog.closeDialog();
+            }}
+            key="topic-dialog-button"
+            containerStyle={s.popupButtonContainerStyle}
+            style={s.buttonTextStyle}
+          >Start Chatting!</Button>
+        </View>
+      </PopupDialog>
+    )
+
     return (
       <View style={s.topicContainer}>
         <Text style={s.topicTitle}>Choose some topics you want to talk about</Text>
@@ -98,12 +140,12 @@ export default class Topics extends Component {
           <Button
             disabled={this.state.selectedTopics.length == 0}
             styleDisabled={{opacity: 0.4}}
-            style={s.button}
-            onPress={this._handleNextView}
+            onPress={this.openPopupDialog}
             containerStyle={s.buttonContainerStyle}
             style={s.buttonTextStyle}
             >Proceed to chat</Button>
         </View>
+        {popup}
       </View>
     );
   }
@@ -191,5 +233,31 @@ const s = StyleSheet.create({
   },
   topicName: {
     fontWeight: '700',
-  }
+  },
+  popupContainer: {
+    padding: 15,
+    paddingTop: 25,
+    borderRadius: 3,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  },
+  popupTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#8E44AD',
+    textAlign: 'center',
+    marginTop: 20,
+    marginBottom: 15,
+  },
+  popupText: {
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  popupButtonContainerStyle: {
+    padding: 10,
+    borderRadius: 2,
+    backgroundColor: '#8E44AD',
+    overflow: 'hidden',
+  },
 })

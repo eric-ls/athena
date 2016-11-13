@@ -128,5 +128,11 @@ export default class Chat extends React.Component {
         }, chat_id, user_id);
       })
     }).done();
+
+
+    // Save current chat information so we can pass to settings
+    // TODO: Do this correctly with router
+    AsyncStorage.setItem("current_chat", JSON.stringify(this.state.messages[0].user));
+
   }
 }
