@@ -13,12 +13,6 @@ class Backend {
   constructor() {
   }
 
-  setUid(value) {
-    this.uid = value;
-  }
-  getUid() {
-    return this.uid;
-  }
   // retrieve the messages from the Backend
   loadMessages(callback) {
     this.messagesRef = firebase.database().ref('messages');
@@ -77,9 +71,7 @@ class Backend {
         })
       });
       let res = await response.json();
-      console.log("res", res);
-      this.setUid(res.id);
-      console.log("getuid", this.getUid());
+      return res.id
     } catch(error) {
       console.error(error);
     }

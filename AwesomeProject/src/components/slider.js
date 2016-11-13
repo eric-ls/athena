@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
   StyleSheet,
   AlertIOS,
+  AsyncStorage,
 } from 'react-native';
 
 import Button from 'react-native-button';
@@ -76,6 +77,12 @@ export default class UserSlider extends Component {
           onPress={this._handlePress}>Continue</Button>
       </View>
     )
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem("user_id").then((value) => {
+      this.setState({"user_id": parseInt(value)});
+    }).done();
   }
 }
 

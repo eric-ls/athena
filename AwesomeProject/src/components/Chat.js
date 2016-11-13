@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { GiftedChat,
          Bubble,
          MessageText,
-         Send
+         Send,
 } from 'react-native-gifted-chat';
+import {
+  AsyncStorage,
+} from 'react-native'
 
 export default class Chat extends React.Component {
   constructor(props) {
@@ -87,5 +90,12 @@ export default class Chat extends React.Component {
         }}
       />
     );
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem("user_id").then((value) => {
+      console.log("chat", value);
+      this.setState({"user_id": parseInt(value)});
+    }).done();
   }
 }

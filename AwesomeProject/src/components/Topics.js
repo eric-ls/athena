@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  Dimensions
+  Dimensions,
+  AsyncStorage,
 } from 'react-native'
 import { Actions } from 'react-native-router-flux';
 import Button from 'react-native-button';
@@ -88,6 +89,13 @@ export default class Topics extends Component {
         </View>
       </View>
     );
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem("user_id").then((value) => {
+      console.log("TOPIC", value);
+      this.setState({"user_id": parseInt(value)});
+    }).done();
   }
 
   topics = [
