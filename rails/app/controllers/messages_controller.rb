@@ -7,7 +7,8 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(message_params)
-    @message.save
+    @message.save!
+    render json: @message
   end
 
   private

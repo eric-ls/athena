@@ -8,6 +8,8 @@ const {
 class Backend {
   uid = '';
   messagesRef = null;
+  // root_url = 'https://tranquil-sands-22048.herokuapp.com';
+  root_url = 'http://localhost:3000'
 
   // initialize State for Rails Backend
   constructor() {
@@ -33,13 +35,23 @@ class Backend {
   }
 
   // send the message to the Backend
-  sendMessage(message) {
-    for (let i = 0; i < message.length; i++) {
-      this.messagesRef.push({
-        text: message[i].text,
-        user: message[i].user,
-        createdAt: firebase.database.ServerValue.TIMESTAMP,
+  async sendMessage(message) {
+    try {
+      const url = this.root_url + "/messages";
+      console.log("posting", url);
+      console.log("posting", message);
+      let response = await fetch(url, {
+        method:'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({message: message})
       });
+      let res = await response.json();
+      return res.id;
+    } catch(error) {
+      console.error(error);
     }
   }
 
@@ -98,10 +110,7 @@ class Backend {
   // send user data to the Backend to get a User Object back
   async sendUserData(first_name, email, facebook_id, token) {
    try {
-      console.log("token", token);
-      // Heroku server:
-      // const url = 'https://tranquil-sands-22048.herokuapp.com/users';
-      const url = 'http://localhost:3000/users';
+      const url = this.root_url + '/users';
       let response = await fetch(url, {
         method:'POST',
         headers: {
@@ -124,7 +133,48 @@ class Backend {
     }
   }
 
+  // send user data to the Backend to get a User Object back
+  async sendUserData(first_name, email, facebook_id, token) {
+   try {
+      const url = this.root_url + '/users';
+      let response = await fetch(url, {
+        method:'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: {
+            first_name: first_name,
+            email: email,
+            facebook_id: facebook_id,
+            token: token,
+          }
+        })
+      });
+      let res = await response.json();
+      return res.id
+    } catch(error) {
+      console.error(error);
+    }
+  }
 
+  async createChat() {
+   try {
+      const url = this.root_url + '/chats';
+      let response = await fetch(url, {
+        method:'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      });
+      let res = await response.json();
+      return res.id
+    } catch(error) {
+      console.error(error);
+    }
+  }
 }
 
 export default new Backend();

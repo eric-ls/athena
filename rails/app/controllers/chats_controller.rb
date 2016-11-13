@@ -27,8 +27,10 @@ class ChatsController < ApplicationController
   end
 
   def create
-    @chat = Chat.new(chat_params)
-    @chat.save
+    # TODO: Add matching
+    @chat = Chat.new(user_1: 2, user_2: 3)
+    @chat.save!
+    render json: @chat
   end
 
   # save new messages to under this chat
