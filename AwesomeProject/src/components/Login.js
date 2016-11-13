@@ -26,6 +26,7 @@ export default class Login extends Component {
       loggedIn: false,
       name: "name",
       email: "email",
+      facebook_id: "",
     };
   }
 
@@ -36,9 +37,9 @@ export default class Login extends Component {
     } else {
       console.log(result);
       this.setState({
-        name: result.name,
+        first_name: result.name,
         email: result.email,
-        facebook_id: result.facebook_id,
+        facebook_id: result.id,
       });
     }
   }
@@ -73,11 +74,14 @@ export default class Login extends Component {
           onLogin={function(data){
             // _this.setState({ user : data.credentials });
             _this._setLoggedIn(true);
-            // console.log("on login");
+            // console.log("ee", _this.state.facebook_id);
+            // debugger;
+            console.log("token blah", data.credentials.token);
             Backend.sendUserData(
               _this.state.name,
               _this.state.email,
-              _this.state.facebook_id,
+              data.credentials.userId,
+              data.credentials.token,
             );
 
             _this._handlePress();

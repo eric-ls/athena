@@ -55,8 +55,9 @@ class Backend {
   }
 
   // send user data to the Backend to get a User Object back
-  async sendUserData(name, email, facebook_id) {
+  async sendUserData(first_name, email, facebook_id, token) {
    try {
+      console.log("token", token);
       const url = 'http://localhost:3000/users';
       let response = await fetch(url, {
         method:'POST',
@@ -66,16 +67,17 @@ class Backend {
         },
         body: JSON.stringify({
           user: {
-            name: name,
+            first_name: first_name,
             email: email,
             facebook_id: facebook_id,
+            token: token,
           }
         })
       });
       let res = await response.json();
-      console.log(res);
+      console.log("res", res);
       this.setUid(res.id);
-      console.log(this.getUid());
+      console.log("getuid", this.getUid());
     } catch(error) {
       console.error(error);
     }
