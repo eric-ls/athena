@@ -16,17 +16,21 @@ class Backend {
   }
 
   // retrieve the messages from the Backend
-  loadMessages(cb, chatid) {
+  loadMessages(cb, chatid, send_id) {
     that = this;
     count = 0;
+    console.log("calling loadMessages send_id", send_id);
 
-    innerFunc = function(callback, chat_id) {
-      console.log("calling loadMessages", callback);
-      console.log("calling loadMessages", chat_id);
-      console.log("calling loadMessages", count);
 
-      const url = that.root_url + '/chats/' + chat_id + '/new_messages';
-      console.log("calling loadMessages", url);
+    innerFunc = function(callback, chat_id, sender_id) {
+      // console.log("calling loadMessages", callback);
+      // console.log("calling loadMessages", chat_id);
+      // console.log("calling loadMessages", count);
+      // debugger;
+      console.log("calling loadMessages sender_id", sender_id);
+
+      const url = that.root_url + '/users/' + sender_id + '/chats/' + chat_id + '/new_messages';
+      // console.log("calling loadMessages", url);
       fetch(url, {
         method:'GET',
         headers: {
@@ -36,9 +40,9 @@ class Backend {
       })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log("response", responseJson);
         for (i = 0; i < responseJson.messages.length; i++) {
           message = responseJson.messages[i];
+          console.log("response", responseJson);
           callback({
             _id: message.id,
             text: message.message,
@@ -50,14 +54,14 @@ class Backend {
           });
         }
         count += 1;
-        setTimeout(innerFunc, 1000, callback, chat_id);
+        setTimeout(innerFunc, 5000, callback, chat_id, sender_id);
       })
       .catch((error) => {
         console.error(error);
       });
     }
 
-    innerFunc(cb, chatid)
+    innerFunc(cb, chatid, send_id)
   }
 
   // send the message to the Backend

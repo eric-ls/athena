@@ -28,8 +28,17 @@ class ChatsController < ApplicationController
 
   def new_messages
     @chat = Chat.find(params[:id])
-    byebug
-    @new_messages = @chat.messages.where('created_at > :now', now: env[:timestamp])
+    requester_id = params[:user_id]
+    user_1 = @chat.user_1
+    user_2 = @chat.user_2
+    if requester_id == user_1
+      sender_id = user_2
+    else
+      sender_id = user_1
+    end
+
+    @new_messages = @chat.messages.where(sender: sender_id).where('created_at > :now', now: env[:timestamp] - 5.seconds)
+    # @new_messages = @chat.messages.where(now: env[:timestamp] - 5.seconds)
     # @new_messages = @chat.messages.where('created_at > :now', now: Time.now)
     if @new_messages.length > 0
       puts @new_messages.first

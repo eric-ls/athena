@@ -11,6 +11,8 @@ import Backend from './Backend';
 
 export default class Chat extends React.Component {
   constructor(props) {
+    debugger;
+    console.log(props);
     super(props);
     this.state = {messages: []};
     this.onSend = this.onSend.bind(this);
@@ -39,7 +41,7 @@ export default class Chat extends React.Component {
       Backend.sendMessage({
         message: message.text,
         sender: message.user._id,
-        chat_id: this.state.chat_id
+        chat_id: this.state.chat_id,
       }).then(message_id => {
        console.log("message_id", message_id);
       })
@@ -105,23 +107,26 @@ export default class Chat extends React.Component {
   }
 
   componentDidMount() {
-    Backend.createChat().then(chat_id => {
-      this.setState({chat_id: chat_id});
-      console.log("chat_id", chat_id);
-      Backend.loadMessages((message) => {
-        this.setState((previousState) => {
-          console.log("chat loadmessages", message);
-          return {
-            messages: GiftedChat.append(previousState.messages, message),
-          };
-        });
-      }, chat_id);
-    })
 
 
-    AsyncStorage.getItem("user_id").then((value) => {
-      console.log("chat", value);
-      this.setState({"user_id": parseInt(value)});
+
+    AsyncStorage.getItem("user_id").then((user_id) => {
+      this.setState({"user_id": parseInt(user_id)});
+
+      Backend.createChat().then((chat_id) => {
+        this.setState({chat_id: chat_id});
+        console.log("chat_id", chat_id);
+         console.log("user_id", user_id);
+
+        Backend.loadMessages((message) => {
+          this.setState((previousState) => {
+            console.log("chat loadmessages", message);
+            return {
+              messages: GiftedChat.append(previousState.messages, message),
+            };
+          });
+        }, chat_id, user_id);
+      })
     }).done();
   }
 }

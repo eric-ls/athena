@@ -8,3 +8,4 @@ class RequestTimestamp
     @app.call(env)
   end
 end
+
