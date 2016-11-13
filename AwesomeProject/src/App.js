@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Router, Scene, Actions } from 'react-native-router-flux';
+import Intro from './components/Intro';
 import Home from './components/Home';
 import Chat from './components/Chat';
 import Login from './components/Login';
@@ -13,10 +14,16 @@ export default class App extends React.Component {
       <Router>
         <Scene key='root'>
           <Scene
+            key='intro'
+            title='Welcome'
+            component={Intro}
+            hideNavBar={true}
+            initial={true} />
+          <Scene
             key='login'
             title='Login'
-            component={Login}
-            initial={true} />
+            hideNavBar={false}
+            component={Login} />
           <Scene
             key='home'
             title='Home'
