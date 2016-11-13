@@ -26,3 +26,5 @@
 *.pbxproj
 *.log
 *.yml
+*.sqlite3
+*.pid
