@@ -9,9 +9,15 @@ import {
   Dimensions,
   AsyncStorage,
 } from 'react-native'
+import PopupDialog, {
+  SlideAnimation,
+  DialogButton
+} from 'react-native-popup-dialog';
 import { Actions } from 'react-native-router-flux';
 import Button from 'react-native-button';
 import Backend from './Backend';
+
+const popupAnimation = new SlideAnimation({ slideFrom: 'bottom' });
 
 export default class Topics extends Component {
   constructor(props) {
@@ -69,6 +75,10 @@ export default class Topics extends Component {
     }
   }
 
+  openPopupDialog = () => {
+    this.popupDialog.openDialog();
+  }
+
   render() {
     let topics = this.topics.map((topic, index) => {
       let icon = this.imgurl[topic];
@@ -84,6 +94,24 @@ export default class Topics extends Component {
 
     return (
       <View style={s.topicContainer}>
+        <PopupDialog
+          ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+          dialogAnimation = { popupAnimation }
+          onClosed={this._handleNextView}
+          actions={[
+            <DialogButton
+              text="CLOSE"
+              onPress={() => {
+                this.popupDialog.closeDialog();
+              }}
+              key="button-1"
+            />,
+          ]}
+        >
+          <View>
+            <Text>Hello!!!!!!!!!!!!!!!</Text>
+          </View>
+        </PopupDialog>
         <Text style={s.topicTitle}>Choose some topics you want to talk about</Text>
         <ScrollView>
           <View style={s.scroll}>
@@ -95,7 +123,7 @@ export default class Topics extends Component {
             disabled={this.state.selectedTopics.length == 0}
             styleDisabled={{opacity: 0.4}}
             style={s.button}
-            onPress={this._handleNextView}
+            onPress={this.openPopupDialog}
             containerStyle={s.buttonContainerStyle}
             style={s.buttonTextStyle}
             >Proceed to chat</Button>
