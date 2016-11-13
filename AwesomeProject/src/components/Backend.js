@@ -35,13 +35,23 @@ class Backend {
   }
 
   // send the message to the Backend
-  sendMessage(message) {
-    for (let i = 0; i < message.length; i++) {
-      this.messagesRef.push({
-        text: message[i].text,
-        user: message[i].user,
-        createdAt: firebase.database.ServerValue.TIMESTAMP,
+  async sendMessage(message) {
+    try {
+      const url = this.root_url + "/messages";
+      console.log("posting", url);
+      console.log("posting", message);
+      let response = await fetch(url, {
+        method:'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({message: message})
       });
+      let res = await response.json();
+      return res.id;
+    } catch(error) {
+      console.error(error);
     }
   }
 
