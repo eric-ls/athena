@@ -9,7 +9,7 @@ import {
   AlertIOS,
   AsyncStorage,
 } from 'react-native';
-
+import Backend from './Backend';
 import Button from 'react-native-button';
 import Slider from 'react-native-slider';
 
@@ -28,6 +28,12 @@ export default class UserSlider extends Component {
       value: 0.5,
       politicalLeaning: 'Moderate',
     };
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem("user_id").then((value) => {
+      this.setState({"user_id": parseInt(value)});
+    }).done();
   }
 
   _updateSliderValue = (value) => {
@@ -55,6 +61,9 @@ export default class UserSlider extends Component {
   }
 
   _handlePress = () => {
+    uid = this.state.user_id;
+    // TODO: Write state.politicalLeaning to leaning variable in uid's row in backend DB
+    Backend.set_political_leaning(uid, this.state.value);
     Actions.topics({});
   }
 
@@ -77,12 +86,6 @@ export default class UserSlider extends Component {
           onPress={this._handlePress}>Continue</Button>
       </View>
     )
-  }
-
-  componentDidMount() {
-    AsyncStorage.getItem("user_id").then((value) => {
-      this.setState({"user_id": parseInt(value)});
-    }).done();
   }
 }
 
