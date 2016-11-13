@@ -19,9 +19,9 @@ class UsersController < ApplicationController
     @user.update(set_political_params) # may need to change political_leaning back to floating point value
   end
 
-  def set_interested_topics
-    @user = User.find(params[:id])
-    @interested_topics = params[:topics]
+  def set_topic_and_get_match
+    @user = User.find(set_topic_and_get_match_params[:id])
+    @interested_topics = params[:user][:selected_topics] # hacky af
     @user.topics = Topic.where(name: @interested_topics)
     @user.save
     respond_to do |format|
@@ -38,11 +38,11 @@ class UsersController < ApplicationController
     curr_user.topics.each do |topic|
       topic.users.each do |user|
         curr_political_diff = (curr_user.political_leaning - user.political_leaning).abs
-        if chosen_user.nil?
+        if chosen_user.nil? and user.id != curr_user.id
           chosen_user = user
           political_diff = curr_political_diff
           topic_chosen = topic
-        elsif curr_political_diff > political_diff
+        elsif curr_political_diff > political_diff and user.id != curr_user.id
           chosen_user = user
           political_diff = curr_political_diff
           topic_chosen = topic
@@ -61,5 +61,9 @@ class UsersController < ApplicationController
 
   def set_political_params
     params.require(:user).permit(:id, :political_leaning)
+  end
+
+  def set_topic_and_get_match_params
+    params.require(:user).permit(:id, :selected_topics)
   end
 end

@@ -20,11 +20,21 @@ export default class Topics extends Component {
   }
 
   _handleNextView = () => {
-    uid = Backend.getUid();
+    uid = this.state.user_id;
     // TODO: Pass the array of selectedTopics to the Backend POST which will return a response body
     //        representing a match for this user to match with
+    const response = Backend.set_topic_and_get_match(uid, this.state.selectedTopics);
+    // TODO: If matched_user is null, then we should do something.
+    const matched_user = response.match;
+    const topic_chosen = response.topic_chosen;
 
     Actions.chat({});
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem("user_id").then((value) => {
+      this.setState({"user_id": parseInt(value)});
+    }).done();
   }
 
   _handleTopicSelect = (t) => {

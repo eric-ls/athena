@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   resources :users
 
   post '/users/set_political_leaning', to: 'users#set_political_leaning'
+  post '/users/set_topic_and_get_match', to: 'users#set_topic_and_get_match'
 end

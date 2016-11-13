@@ -50,9 +50,9 @@ class Backend {
     }
   };
 
-  async set_interested_topic(uid, topics) {
+  async set_topic_and_get_match(uid, topics) {
     try {
-      const url = 'http://localhost:3000/users/set_interested_topic';
+      const url = 'http://localhost:3000/users/set_topic_and_get_match';
       let response = await fetch(url, {
         method:'POST',
         headers: {
@@ -61,19 +61,20 @@ class Backend {
         },
         body: JSON.stringify({
           user: {
-            id: this.getUid(),
-            topics: topics,
+            id: uid,
+            selected_topics: topics,
           }
         })
       });
-      let res = await response.json();
+      let res = await response.json(); // get res.match res.topic_chosen
       console.log("res", res); // TODO: This returns the user that you are about to talk to.
+      return res;
     } catch(error) {
       console.error(error);
     }
   }
 
-  async set_political_leaning(uid, leaning) {
+  async set_political_leaning(uid, leaning_value) {
     try {
       const url = 'http://localhost:3000/users/set_political_leaning';
       let response = await fetch(url, {
@@ -85,7 +86,7 @@ class Backend {
         body: JSON.stringify({
           user: {
             id: uid,
-            political_leaning: leaning,
+            political_leaning: leaning_value,
           }
         })
       });
