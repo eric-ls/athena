@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { View,
          Text,
          StyleSheet,
-         Image }
-from 'react-native'
+         Image,
+         AsyncStorage,
+} from 'react-native'
 import { Actions } from 'react-native-router-flux';
 import Button from 'react-native-button';
 import Backend from './Backend';
@@ -55,7 +56,6 @@ export default class Login extends Component {
     new GraphRequestManager().addRequest(infoRequest).start();
   }
 
-
   _handlePress = () => {
     Actions.home({});
   }
@@ -72,19 +72,17 @@ export default class Login extends Component {
           permissions={["email","user_friends"]}
           loginBehavior={FBLoginManager.LoginBehaviors.Native}
           onLogin={function(data){
-            // _this.setState({ user : data.credentials });
+            console.log("YAYY");
             _this._setLoggedIn(true);
-            // console.log("ee", _this.state.facebook_id);
-            // debugger;
-            console.log("token blah", data.credentials.token);
             Backend.sendUserData(
               _this.state.name,
               _this.state.email,
-              data.credentials.userId,
+              data.credentials.userId, // facebook user id
               data.credentials.token,
-            );
-
-            _this._handlePress();
+            ).then(user_id => {
+              AsyncStorage.setItem("user_id", user_id.toString());
+              _this._handlePress();
+            });
           }}
           onLogout={function(){
             _this._setLoggedIn(false);
