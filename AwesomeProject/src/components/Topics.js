@@ -96,6 +96,24 @@ export default class Topics extends Component {
 
     return (
       <View style={s.topicContainer}>
+        <PopupDialog
+          ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+          dialogAnimation = { popupAnimation }
+          onClosed={this._handleNextView}
+          actions={[
+            <DialogButton
+              text="CLOSE"
+              onPress={() => {
+                this.popupDialog.closeDialog();
+              }}
+              key="button-1"
+            />,
+          ]}
+        >
+          <View>
+            <Text>Hello!!!!!!!!!!!!!!!</Text>
+          </View>
+        </PopupDialog>
         <Text style={s.topicTitle}>Choose some topics you want to talk about</Text>
         <ScrollView>
           <View style={s.scroll}>
