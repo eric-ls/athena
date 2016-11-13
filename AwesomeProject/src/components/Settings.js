@@ -14,21 +14,41 @@ import Button from 'react-native-button';
 import Backend from './Backend';
 
 export default class Settings extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { current_chat: "" };
+  }
 
-  componentDidMount() {
+  async getCache(key){
+      try{
+          console.log("getting cache");
+          let value = await AsyncStorage.getItem(key);
+          console.log("cache value is ", value);
+          return value;
+      }
+      catch(e){
+          console.log('caught error', e);
+          // Handle exceptions
+      }
+  }
+
+  // lets make this entire function async doe LOL #nhamena
+  async componentWillMount() {
     AsyncStorage.getItem("user_id").then((value) => {
       this.setState({"user_id": parseInt(value)});
     }).done();
+
+    const current_chat = await this.getCache("current_chat")
+    this.setState({"current_chat": JSON.parse(current_chat) });
   }
 
-// TODO: Add back to the correct chat button
   render() {
     return (
       <View style={s.settingsContainer}>
         <View style={s.profileContainer}>
-          <Text style={s.name}>Arnie Sanders</Text>
+          <Text style={s.name}>{this.state.current_chat.name}</Text>
           <Image
-            source={{uri: 'https://cdn4.iconfinder.com/data/icons/business-3-4/512/head-512.png'}}
+            source={{uri: this.state.current_chat.avatar}}
             style={s.profilePhoto} />
         </View>
         <View style={s.break}/>
@@ -85,7 +105,8 @@ const s = StyleSheet.create({
   },
   break: {
     flex: 0.2,
-    height: 50,
+    height: 25,
+    // Add shadow
   },
   buttons: {
     flex:1,

@@ -21,14 +21,13 @@ export default class App extends React.Component {
             />
           <Scene
             key='settings'
-            title='Settings'
-            component={Settings}
-            initial={true} />
+            title='Chat Settings'
+            component={Settings} />
           <Scene
             key='login'
             // title='Login'
             component={Login}
-              />
+            initial={true} />
           <Scene
             key='home'
             // title='Home'
