@@ -24,3 +24,4 @@
 *.plist
 *.xcodeproj
 *.pbxproj
+*.log
