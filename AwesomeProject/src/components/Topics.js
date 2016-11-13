@@ -5,9 +5,19 @@ import {
 } from 'react-native'
 import { Actions } from 'react-native-router-flux';
 import Button from 'react-native-button';
+import Backend from './Backend';
 
 export default class Topics extends Component {
-  _handlePress = () => {
+  constructor(props) {
+    super(props);
+    this.state = { selectedTopics: [] };
+  }
+
+  _handleNextView = () => {
+    uid = Backend.getUid();
+    // TODO: Pass the array of selectedTopics to the Backend POST which will return a response body
+    //        representing a match for this user to match with
+
     Actions.chat({});
   }
 

@@ -54,6 +54,50 @@ class Backend {
     }
   }
 
+  set_interested_topic(uid, topics) {
+    try {
+      const url = 'http://localhost:3000/users/set_interested_topic';
+      let response = await fetch(url, {
+        method:'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: {
+            id: uid,
+            topics: topics,
+          }
+        })
+      });
+      let res = await response.json();
+      console.log("res", res); // TODO: This returns the user that you are about to talk to.
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
+  set_political_leaning(uid, leaning) {
+    try {
+      const url = 'http://localhost:3000/users/set_political_leaning';
+      let response = await fetch(url, {
+        method:'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: {
+            id: uid,
+            political_leaning: leaning,
+          }
+        })
+      });
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
   // send user data to the Backend to get a User Object back
   async sendUserData(first_name, email, facebook_id, token) {
    try {

@@ -8,7 +8,7 @@ import {
   StyleSheet,
   AlertIOS,
 } from 'react-native';
-
+import Backend from './Backend';
 import Button from 'react-native-button';
 import Slider from 'react-native-slider';
 
@@ -54,6 +54,9 @@ export default class UserSlider extends Component {
   }
 
   _handlePress = () => {
+    uid = Backend.getUid(); // TODO: This call is wrong.
+    // TODO: Write state.politicalLeaning to leaning variable in uid's row in backend DB
+    Backend.setPoliticalParams(uid, this.state.politicalLeaning);
     Actions.topics({});
   }
 
