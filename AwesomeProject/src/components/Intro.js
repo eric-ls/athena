@@ -4,6 +4,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import Button from 'react-native-button';
 
 export default class Intro extends Component {
@@ -11,6 +12,10 @@ export default class Intro extends Component {
     super(props);
 
     this.state = {};
+  }
+
+  _handlePress = () => {
+    Actions.login({});
   }
 
   render() {

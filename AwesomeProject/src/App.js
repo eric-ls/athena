@@ -22,6 +22,7 @@ export default class App extends React.Component {
           <Scene
             key='login'
             title='Login'
+            hideNavBar={false}
             component={Login} />
           <Scene
             key='home'

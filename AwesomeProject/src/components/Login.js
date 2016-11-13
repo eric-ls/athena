@@ -120,7 +120,7 @@ export default class Login extends Component {
 
     return (
       <View style={s.loginContainer}>
-        <Text style={s.loginTitle}>Elephant Meets Donkey</Text>
+        <Text style={s.loginTitle}>Athena</Text>
         {profile}
         {loginBtn}
         <Button
