@@ -103,7 +103,7 @@ export default class Settings extends Component {
               <Button // TODO: Need to remove this button!
                 styleDisabled={{opacity: 0.4}}
                 style={s.buttons}
-                onPress={this._handleSubmit}
+                onPress={this.openPopupDialog}
                 containerStyle={s.buttonContainerStyle}
                 style={s.buttonTextStyle}
                 >Submit</Button>
