@@ -71,16 +71,18 @@ export default class Login extends Component {
           permissions={["email","user_friends","public_profile"]}
           loginBehavior={FBLoginManager.LoginBehaviors.Native}
           onLogin={function(data){
-            _this._setLoggedIn(true);
-            Backend.sendUserData(
-              _this.state.name,
-              _this.state.email,
-              data.credentials.userId, // facebook user id
-              data.credentials.token,
-            ).then(user_id => {
-              AsyncStorage.setItem("user_id", user_id.toString());
-              _this._handlePress();
-            });
+            if (_this.state.name != "name") {
+              _this._setLoggedIn(true);
+              Backend.sendUserData(
+                _this.state.name,
+                _this.state.email,
+                data.credentials.userId, // facebook user id
+                data.credentials.token,
+              ).then(user_id => {
+                AsyncStorage.setItem("user_id", user_id.toString());
+                _this._handlePress();
+              });
+            }
           }}
           onLogout={function(){
             _this._setLoggedIn(false);

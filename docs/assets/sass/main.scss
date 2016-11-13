@@ -1,7 +1,8 @@
 @import "compass/reset";
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
 
 $dark-purple  : #8e44ad;
-$light-purple : #9b59b6;
+$light-purple : #ac6fc5;
 
 @keyframes slideIn {
   from {
@@ -27,10 +28,21 @@ $light-purple : #9b59b6;
 
 @keyframes phoneSlideUp {
   from {
+    opacity: 0;
     transform: translateY(130%);
   }
   to {
+    opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
@@ -42,8 +54,6 @@ $light-purple : #9b59b6;
 }
 
 .bg-dark {
-  animation: slideIn 1.3s cubic-bezier(.9,.03,.46,.9) both;
-  position: absolute;
   background: $dark-purple;
   height: 100vh;
   width: 100%;
@@ -62,7 +72,7 @@ $light-purple : #9b59b6;
 
 .iphone-img {
   animation: phoneSlideUp 700ms cubic-bezier(.54,.17,.09,.96) both;
-  animation-delay: 1s;
+  animation-delay: 0.8s;
   position: absolute;
   z-index: 3;
   height: 80%;
@@ -80,19 +90,49 @@ $light-purple : #9b59b6;
   font-family: Lato;
   position: absolute;
   z-index: 3;
-  top: 100px;
+  top: 170px;
   left: 10%;
-  max-width: 500px;
+  max-width: 40%;
 
   h1 {
+    animation: fadeIn 0.5s both;
+    animation-delay: 1.2s;
     font-weight: 700;
-    font-size: 36px;
+    font-size: 55px;
     margin-bottom: 40px;
   }
 
   p {
+    animation: fadeIn 0.5s both;
+    animation-delay: 1.3s;
     font-size: 24px;
     font-weight: 300;
+    line-height: 1.5;
     opacity: 0.8;
+    margin-bottom: 50px;
+  }
+}
+
+.link {
+  animation: fadeIn 0.5s both;
+  animation-delay: 1.4s;
+  color: $light-purple;
+  background: white;
+  border-radius: 3px;
+  font-size: 19px;
+  display: inline-block;
+  padding: 14px 16px;
+  text-decoration: none;
+  transition: 100ms;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+    opacity: 0.7;
+    box-shadow: none;
   }
 }

@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:300,400,700,900");
 /* line 5, ../../../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -85,13 +86,23 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 @keyframes phoneSlideUp {
   from {
+    opacity: 0;
     transform: translateY(130%);
   }
   to {
+    opacity: 1;
     transform: translateY(0);
   }
 }
-/* line 37, ../sass/main.scss */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* line 49, ../sass/main.scss */
 .background {
   height: 100vh;
   width: 100%;
@@ -99,62 +110,91 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   overflow: hidden;
 }
 
-/* line 44, ../sass/main.scss */
+/* line 56, ../sass/main.scss */
 .bg-dark {
-  animation: slideIn 1.3s cubic-bezier(0.9, 0.03, 0.46, 0.9) both;
-  position: absolute;
   background: #8e44ad;
   height: 100vh;
   width: 100%;
   transform-origin: center;
 }
 
-/* line 53, ../sass/main.scss */
+/* line 63, ../sass/main.scss */
 .bg-light {
   animation: slideInLight 1.3s cubic-bezier(0.9, 0.03, 0.46, 0.9) both;
   position: absolute;
   z-index: 2;
-  background: #9b59b6;
+  background: #ac6fc5;
   height: 100vh;
   width: 100%;
   transform-origin: center;
 }
 
-/* line 63, ../sass/main.scss */
+/* line 73, ../sass/main.scss */
 .iphone-img {
   animation: phoneSlideUp 700ms cubic-bezier(0.54, 0.17, 0.09, 0.96) both;
-  animation-delay: 1s;
+  animation-delay: 0.8s;
   position: absolute;
   z-index: 3;
   height: 80%;
   right: 17%;
   bottom: 50px;
 }
-/* line 72, ../sass/main.scss */
+/* line 82, ../sass/main.scss */
 .iphone-img img {
   height: 100%;
   object-fit: cover;
 }
 
-/* line 78, ../sass/main.scss */
+/* line 88, ../sass/main.scss */
 .title-container {
   color: white;
   font-family: Lato;
   position: absolute;
   z-index: 3;
-  top: 100px;
+  top: 170px;
   left: 10%;
-  max-width: 500px;
+  max-width: 40%;
 }
-/* line 87, ../sass/main.scss */
+/* line 97, ../sass/main.scss */
 .title-container h1 {
+  animation: fadeIn 0.5s both;
+  animation-delay: 1.2s;
   font-weight: 700;
-  font-size: 36px;
+  font-size: 55px;
   margin-bottom: 40px;
 }
-/* line 93, ../sass/main.scss */
+/* line 105, ../sass/main.scss */
 .title-container p {
+  animation: fadeIn 0.5s both;
+  animation-delay: 1.3s;
   font-size: 24px;
   font-weight: 300;
+  line-height: 1.5;
   opacity: 0.8;
+  margin-bottom: 50px;
+}
+
+/* line 116, ../sass/main.scss */
+.link {
+  animation: fadeIn 0.5s both;
+  animation-delay: 1.4s;
+  color: #ac6fc5;
+  background: white;
+  border-radius: 3px;
+  font-size: 19px;
+  display: inline-block;
+  padding: 14px 16px;
+  text-decoration: none;
+  transition: 100ms;
+}
+/* line 128, ../sass/main.scss */
+.link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+/* line 133, ../sass/main.scss */
+.link:active {
+  transform: translateY(0);
+  opacity: 0.7;
+  box-shadow: none;
 }
