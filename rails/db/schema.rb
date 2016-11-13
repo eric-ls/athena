@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20161113015206) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "chats", force: :cascade do |t|
     t.integer  "user_1"
     t.integer  "user_2"
@@ -36,8 +39,8 @@ ActiveRecord::Schema.define(version: 20161113015206) do
   create_table "topics_users", id: false, force: :cascade do |t|
     t.integer "user_id"
     t.integer "topic_id"
-    t.index ["topic_id"], name: "index_topics_users_on_topic_id"
-    t.index ["user_id"], name: "index_topics_users_on_user_id"
+    t.index ["topic_id"], name: "index_topics_users_on_topic_id", using: :btree
+    t.index ["user_id"], name: "index_topics_users_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|

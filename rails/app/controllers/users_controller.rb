@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   end
 
   def set_political_leaning
-    @user = User.find(params[:id])
+    @user = User.find(set_political_params[:id])
     @user.update(set_political_params) # may need to change political_leaning back to floating point value
   end
 
