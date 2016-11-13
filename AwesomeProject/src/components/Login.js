@@ -14,9 +14,7 @@ const {
   GraphRequestManager,
 } = FBSDK;
 
-
 var {FBLogin, FBLoginManager} = require('react-native-facebook-login');
-
 
 export default class Login extends Component {
   constructor(props) {
@@ -37,9 +35,10 @@ export default class Login extends Component {
     } else {
       console.log(result);
       this.setState({
-        first_name: result.name,
+        name: result.name,
         email: result.email,
         facebook_id: result.id,
+        photo: result.picture.data.url,
       });
     }
   }
@@ -47,14 +46,13 @@ export default class Login extends Component {
   componentWillMount() {
     // Create a graph request asking for user information with a callback to handle the response.
     const infoRequest = new GraphRequest(
-      '/me?fields=name,email',
+      '/me?fields=name,email,picture.type(large)',
       null,
       this._responseInfoCallback
     );
     // Start the graph request.
     new GraphRequestManager().addRequest(infoRequest).start();
   }
-
 
   _handlePress = () => {
     Actions.home({});
@@ -69,22 +67,17 @@ export default class Login extends Component {
     let loginBtn =
       <FBLogin style={{ marginBottom: 50, }}
           ref={(fbLogin) => { this.fbLogin = fbLogin }}
-          permissions={["email","user_friends"]}
+          permissions={["email","user_friends","public_profile"]}
           loginBehavior={FBLoginManager.LoginBehaviors.Native}
           onLogin={function(data){
-            // _this.setState({ user : data.credentials });
             _this._setLoggedIn(true);
-            // console.log("ee", _this.state.facebook_id);
-            // debugger;
-            console.log("token blah", data.credentials.token);
+
             Backend.sendUserData(
               _this.state.name,
               _this.state.email,
               data.credentials.userId,
               data.credentials.token,
             );
-
-            _this._handlePress();
           }}
           onLogout={function(){
             _this._setLoggedIn(false);
@@ -114,7 +107,8 @@ export default class Login extends Component {
     if (this.state.loggedIn) {
       profile = <UserProfile
                   name={this.state.name}
-                  location={this.state.email} />
+                  email={this.state.email}
+                  photo={this.state.photo} />
     } else {
       profile = <Text style={{marginBottom: 20,}}>Please log in!</Text>
     }
@@ -146,10 +140,10 @@ class UserProfile extends Component {
   render() {
     return (
       <View style={s.profileContainer}>
-        <Image source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
+        <Image source={{uri: this.props.photo}}
        style={{width: 150, height: 150, marginBottom: 20, borderRadius: 7}} />
         <Text style={{textAlign: 'center', fontWeight: '700', fontSize: 18}}>{this.props.name}</Text>
-        <Text style={{textAlign: 'center'}}>{this.props.location}</Text>
+        <Text style={{textAlign: 'center'}}>{this.props.email}</Text>
       </View>
     )
   }

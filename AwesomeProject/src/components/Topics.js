@@ -35,7 +35,6 @@ export default class Topics extends Component {
     }
 
     this.setState({ selectedTopic: currentTopics })
-    console.log(this.state.selectedTopics)
   }
 
   _getTopicStyle = (topic) => {
