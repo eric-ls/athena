@@ -13,12 +13,6 @@ class Backend {
   constructor() {
   }
 
-  setUid(value) {
-    this.uid = value;
-  }
-  getUid() {
-    return this.uid;
-  }
   // retrieve the messages from the Backend
   loadMessages(callback) {
     this.messagesRef = firebase.database().ref('messages');
@@ -57,7 +51,6 @@ class Backend {
   // send user data to the Backend to get a User Object back
   async sendUserData(first_name, email, facebook_id, token) {
    try {
-      console.log("token", token);
       const url = 'http://localhost:3000/users';
       let response = await fetch(url, {
         method:'POST',
@@ -75,9 +68,7 @@ class Backend {
         })
       });
       let res = await response.json();
-      console.log("res", res);
-      this.setUid(res.id);
-      console.log("getuid", this.getUid());
+      return res.id
     } catch(error) {
       console.error(error);
     }
