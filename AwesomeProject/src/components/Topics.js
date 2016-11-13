@@ -57,10 +57,12 @@ export default class Topics extends Component {
 
   render() {
     let topics = this.topics.map((topic, index) => {
+      let icon = this.imgurl[topic];
+
       return (
         <TouchableOpacity onPress={this._handleTopicSelect.bind(this, topic)}
               key={index} style={this._getTopicStyle(topic)}>
-          <Image />
+          <Image source={icon} style={s.topicImg} resizeMode={'contain'}/>
           <Text style={s.topicName}>{topic}</Text>
         </TouchableOpacity>
       )
@@ -76,10 +78,13 @@ export default class Topics extends Component {
         </ScrollView>
         <View style={s.buttonBar}>
           <Button
+            disabled={this.state.selectedTopics.length == 0}
+            styleDisabled={{opacity: 0.4}}
             style={s.button}
             onPress={this._handleNextView}
             containerStyle={s.buttonContainerStyle}
-            style={s.buttonTextStyle}>Proceed to chat</Button>
+            style={s.buttonTextStyle}
+            >Proceed to chat</Button>
         </View>
       </View>
     );
@@ -95,6 +100,17 @@ export default class Topics extends Component {
     'Taxes',
     'Foreign Policy'
   ]
+
+  imgurl = {
+    'Immigration': require('../img/immigration.png'),
+    'Healthcare': require('../img/healthcare.png'),
+    'Climate Change': require('../img/climatechange.png'),
+    'Guns': require('../img/guns.png'),
+    'Abortion': require('../img/abortion.png'),
+    'Education': require('../img/education.png'),
+    'Taxes': require('../img/taxes.png'),
+    'Foreign Policy': require('../img/foreignpolicy.png'),
+  }
 }
 
 const s = StyleSheet.create({
@@ -108,6 +124,11 @@ const s = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
     padding: 20,
+  },
+  topicImg: {
+    width: 35,
+    height: 35,
+    marginBottom: 10,
   },
   scroll: {
     flexDirection: 'row',
