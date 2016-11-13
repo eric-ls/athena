@@ -1,4 +1,5 @@
 @import "compass/reset";
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
 
 $dark-purple  : #8e44ad;
 $light-purple : #ac6fc5;
@@ -97,7 +98,7 @@ $light-purple : #ac6fc5;
     animation: fadeIn 0.5s both;
     animation-delay: 1.2s;
     font-weight: 700;
-    font-size: 45px;
+    font-size: 55px;
     margin-bottom: 40px;
   }
 
