@@ -28,14 +28,18 @@ class ChatsController < ApplicationController
 
   def new_messages
     @chat = Chat.find(params[:id])
-    @new_messages = @chat.messages.where('created_at > :now', now: Time.now)
-    # @new_messages = @chat.messages.first(2)
+    byebug
+    @new_messages = @chat.messages.where('created_at > :now', now: env[:timestamp])
+    # @new_messages = @chat.messages.where('created_at > :now', now: Time.now)
+    if @new_messages.length > 0
+      puts @new_messages.first
+    end
     render json: { messages: @new_messages }
   end
 
   def create
     # TODO: Add matching
-    @chat = Chat.new(user_1: 2, user_2: 3)
+    @chat = Chat.find_or_create_by(user_1: 1, user_2: 2)
     @chat.save!
     render json: @chat
   end
