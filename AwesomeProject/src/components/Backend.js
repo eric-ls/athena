@@ -59,8 +59,8 @@ class Backend {
    try {
       console.log("token", token);
       // Heroku server:
-      // const url = 'https://tranquil-sands-22048.herokuapp.com/users';
-      const url = 'http://localhost:3000/users';
+      const url = 'https://tranquil-sands-22048.herokuapp.com/users';
+      // const url = 'http://localhost:3000/users';
       let response = await fetch(url, {
         method:'POST',
         headers: {
