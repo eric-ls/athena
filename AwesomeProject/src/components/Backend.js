@@ -37,6 +37,7 @@ class Backend {
     };
     this.messagesRef.limitToLast(20).on('child_added', onReceive);
   }
+
   // send the message to the Backend
   sendMessage(message) {
     for (let i = 0; i < message.length; i++) {
@@ -47,14 +48,15 @@ class Backend {
       });
     }
   }
+
   // close the connection to the Backend
   closeChat() {
     if (this.messagesRef) {
       this.messagesRef.off();
     }
-  }
+  };
 
-  set_interested_topic(uid, topics) {
+  async set_interested_topic(uid, topics) {
     try {
       const url = 'http://localhost:3000/users/set_interested_topic';
       let response = await fetch(url, {
@@ -65,7 +67,7 @@ class Backend {
         },
         body: JSON.stringify({
           user: {
-            id: uid,
+            id: this.getUid(),
             topics: topics,
           }
         })
@@ -77,7 +79,7 @@ class Backend {
     }
   }
 
-  set_political_leaning(uid, leaning) {
+  async set_political_leaning(uid, leaning) {
     try {
       const url = 'http://localhost:3000/users/set_political_leaning';
       let response = await fetch(url, {

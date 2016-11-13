@@ -47,6 +47,7 @@ class UsersController < ApplicationController
           political_diff = curr_political_diff
           topic_chosen = topic
         end
+      end
     end
     data[:match] = chosen_user
     data[:topic_chosen] = topic_chosen

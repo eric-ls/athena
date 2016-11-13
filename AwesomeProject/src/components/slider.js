@@ -56,7 +56,7 @@ export default class UserSlider extends Component {
   _handlePress = () => {
     uid = Backend.getUid(); // TODO: This call is wrong.
     // TODO: Write state.politicalLeaning to leaning variable in uid's row in backend DB
-    Backend.setPoliticalParams(uid, this.state.politicalLeaning);
+    Backend.set_political_leaning(uid, this.state.politicalLeaning);
     Actions.topics({});
   }
 
