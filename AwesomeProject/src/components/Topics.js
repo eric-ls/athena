@@ -77,7 +77,6 @@ export default class Topics extends Component {
   }
 
   openPopupDialog = () => {
-    this.state.dialogIsOpen = true;
     this.popupDialog.openDialog();
   }
 
@@ -139,7 +138,6 @@ export default class Topics extends Component {
             <DialogButton
               text="PROCEED TO CHAT"
               onPress={() => {
-                this.state.dialogIsOpen = false;
                 this.popupDialog.closeDialog();
               }}
               key="button-1"
