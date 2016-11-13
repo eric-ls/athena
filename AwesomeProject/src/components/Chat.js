@@ -106,6 +106,7 @@ export default class Chat extends React.Component {
 
   componentDidMount() {
     Backend.createChat().then(chat_id => {
+      this.setState({chat_id: chat_id});
       console.log("chat_id", chat_id);
       Backend.loadMessages((message) => {
         this.setState((previousState) => {
