@@ -9,15 +9,26 @@ import {
   ScrollView,
   Dimensions,
   AsyncStorage,
-} from 'react-native'
+} from 'react-native';
+import PopupDialog, {
+  DialogTitle,
+  SlideAnimation,
+  DialogButton
+} from 'react-native-popup-dialog';
 import { Actions } from 'react-native-router-flux';
 import Button from 'react-native-button';
 import Backend from './Backend';
+
+const popupAnimation = new SlideAnimation({ slideFrom: 'bottom' });
 
 export default class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = { current_chat: "" };
+  }
+
+  openPopupDialog = () => {
+    this.popupDialog.openDialog();
   }
 
   async getCache(key){
@@ -34,7 +45,8 @@ export default class Settings extends Component {
   }
 
   _handleEndConversation = () => {
-    Actions.feedback({});
+    // Actions.feedback({});
+    this.popupDialog.openDialog();
   }
 
   // lets make this entire function async doe LOL #nhamena
@@ -66,12 +78,47 @@ export default class Settings extends Component {
             style={s.buttonTextStyle}
             >End Conversation</Button>
         </View>
+        <PopupDialog
+          ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+          dialogAnimation = { popupAnimation }
+          onClosed={this._handleNextView}
+          dialogTitle={<DialogTitle title="Reminder" />}
+          actions={[
+            <DialogButton
+              text="SUBMIT"
+              onPress={() => {
+                this.state.dialogIsOpen = false;
+                this.popupDialog.closeDialog();
+                Actions.topics({});
+              }}
+              key="button-1"
+            />,
+          ]}
+        >
+          <View style={s.feedbackContainer}>
+            <Text style={s.rateTitle}> Did you enjoy your conversation?</Text>
+            <Text style={s.rateTitle}> Stars </Text>
+            <Text style={s.rateTitle}> Tag it!</Text>
+            <Text style={s.rateTitle}> Tags</Text>
+              <Button // TODO: Need to remove this button!
+                styleDisabled={{opacity: 0.4}}
+                style={s.buttons}
+                onPress={this._handleSubmit}
+                containerStyle={s.buttonContainerStyle}
+                style={s.buttonTextStyle}
+                >Submit</Button>
+          </View>
+        </PopupDialog>
       </View>
     );
   }
 }
 
 const s = StyleSheet.create({
+  feedbackContainer: {
+    paddingTop: 60,
+    flex: 1,
+  },
   settingsContainer: {
     paddingTop: 60,
     flex: 1,
@@ -149,5 +196,11 @@ const s = StyleSheet.create({
   },
   topicName: {
     fontWeight: '700',
+  },
+  rateTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    textAlign: 'center',
+    padding: 20,
   }
 })
