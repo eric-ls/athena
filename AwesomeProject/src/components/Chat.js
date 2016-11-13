@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { GiftedChat } from 'react-native-gifted-chat';
+import { GiftedChat,
+         Bubble,
+         MessageText,
+         Send
+} from 'react-native-gifted-chat';
 
 export default class Chat extends React.Component {
   constructor(props) {
@@ -7,6 +11,7 @@ export default class Chat extends React.Component {
     this.state = {messages: []};
     this.onSend = this.onSend.bind(this);
   }
+
   componentWillMount() {
     this.setState({
       messages: [
@@ -23,18 +28,60 @@ export default class Chat extends React.Component {
       ],
     });
   }
-  onSend(messages = []) {
+
+  onSend = (messages = []) => {
     this.setState((previousState) => {
       return {
         messages: GiftedChat.append(previousState.messages, messages),
       };
     });
   }
+
+  renderBubble = (props) => {
+    return (
+      <Bubble
+        {...props}
+        wrapperStyle={{
+          right: {
+            backgroundColor: '#8E44AD',
+          }
+        }}
+      />
+    );
+  }
+
+  renderMessageText = (props) => {
+    return (
+      <MessageText
+        {...props}
+        textStyle={{
+          right: {
+            color: 'white',
+          }
+        }}
+      />
+    )
+  }
+
+  renderSend = (props) => {
+    return (
+      <Send
+        {...props}
+        textStyle={{
+          color: '#8E44AD',
+        }}
+      />
+    )
+  }
+
   render() {
     return (
       <GiftedChat
         messages={this.state.messages}
         onSend={this.onSend}
+        renderBubble={this.renderBubble}
+        renderMessageText={this.renderMessageText}
+        renderSend={this.renderSend}
         user={{
           _id: 1,
         }}
