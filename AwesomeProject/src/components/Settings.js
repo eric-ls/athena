@@ -27,10 +27,6 @@ export default class Settings extends Component {
     this.state = { current_chat: "" };
   }
 
-  openPopupDialog = () => {
-    this.popupDialog.openDialog();
-  }
-
   async getCache(key){
       try{
           console.log("getting cache");
@@ -82,28 +78,20 @@ export default class Settings extends Component {
           ref={(popupDialog) => { this.popupDialog = popupDialog; }}
           dialogAnimation = { popupAnimation }
           onClosed={this._handleNextView}
-          dialogTitle={<DialogTitle title="Reminder" />}
-          actions={[
-            <DialogButton
-              text="SUBMIT"
-              onPress={() => {
-                this.state.dialogIsOpen = false;
-                this.popupDialog.closeDialog();
-                Actions.topics({});
-              }}
-              key="button-1"
-            />,
-          ]}
-        >
+          dialogTitle={<DialogTitle title="Reminder" />}>
           <View style={s.feedbackContainer}>
             <Text style={s.rateTitle}> Did you enjoy your conversation?</Text>
             <Text style={s.rateTitle}> Stars </Text>
             <Text style={s.rateTitle}> Tag it!</Text>
             <Text style={s.rateTitle}> Tags</Text>
-              <Button // TODO: Need to remove this button!
+              <Button
                 styleDisabled={{opacity: 0.4}}
                 style={s.buttons}
-                onPress={this.openPopupDialog}
+                onPress={()=> {
+                  this.state.dialogIsOpen = false;
+                  this.popupDialog.closeDialog();
+                  Actions.topics({});
+                }}
                 containerStyle={s.buttonContainerStyle}
                 style={s.buttonTextStyle}
                 >Submit</Button>
