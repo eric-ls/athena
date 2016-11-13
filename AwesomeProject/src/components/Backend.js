@@ -8,8 +8,8 @@ const {
 class Backend {
   uid = '';
   messagesRef = null;
-  // root_url = 'https://tranquil-sands-22048.herokuapp.com';
-  root_url = 'http://localhost:3000'
+  root_url = 'https://tranquil-sands-22048.herokuapp.com';
+  // root_url = 'http://localhost:3000'
 
   // initialize State for Rails Backend
   constructor() {
@@ -96,7 +96,7 @@ class Backend {
 
   async set_topic_and_get_match(uid, topics) {
     try {
-      const url = 'http://localhost:3000/users/set_topic_and_get_match';
+      const url = this.root_url  + '/users/set_topic_and_get_match';
       let response = await fetch(url, {
         method:'POST',
         headers: {
@@ -120,7 +120,7 @@ class Backend {
 
   async set_political_leaning(uid, leaning_value) {
     try {
-      const url = 'http://localhost:3000/users/set_political_leaning';
+      const url = this.root_url + '/users/set_political_leaning';
       let response = await fetch(url, {
         method:'POST',
         headers: {
