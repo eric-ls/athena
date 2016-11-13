@@ -88,9 +88,8 @@ export default class Settings extends Component {
                 styleDisabled={{opacity: 0.4}}
                 style={s.buttons}
                 onPress={()=> {
-                  this.state.dialogIsOpen = false;
                   this.popupDialog.closeDialog();
-                  Actions.topics({});
+                  Actions.topics({type: "reset"});
                 }}
                 containerStyle={s.buttonContainerStyle}
                 style={s.buttonTextStyle}
