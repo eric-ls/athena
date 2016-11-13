@@ -16,22 +16,54 @@ class Backend {
   }
 
   // retrieve the messages from the Backend
-  loadMessages(callback) {
-    this.messagesRef = firebase.database().ref('messages');
-    this.messagesRef.off();
-    const onReceive = (data) => {
-      const message = data.val();
-      callback({
-        _id: data.key,
-        text: message.text,
-        createdAt: new Date(message.createdAt),
-        user: {
-          _id: message.user._id,
-          name: message.user.name,
-        },
+  loadMessages(cb, chatid, send_id) {
+    that = this;
+    count = 0;
+    console.log("calling loadMessages send_id", send_id);
+
+
+    innerFunc = function(callback, chat_id, sender_id) {
+      // console.log("calling loadMessages", callback);
+      // console.log("calling loadMessages", chat_id);
+      // console.log("calling loadMessages", count);
+      // debugger;
+      console.log("calling loadMessages sender_id", sender_id);
+
+      const url = that.root_url + '/users/' + sender_id + '/chats/' + chat_id + '/new_messages';
+      // console.log("calling loadMessages", url);
+      fetch(url, {
+        method:'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        for (i = 0; i < responseJson.messages.length; i++) {
+          message = responseJson.messages[i];
+          console.log("response", responseJson);
+          callback({
+            _id: message._id,
+            text: message.text,
+            createdAt: message.created_at,
+            user: {
+              _id: message.user._id,
+              avatar: message.user.avatar,
+              name: message.user.name,
+              // name: message.user.name, TODO: Add this.
+            },
+          });
+        }
+        count += 1;
+        setTimeout(innerFunc, 5000, callback, chat_id, sender_id);
+      })
+      .catch((error) => {
+        console.error(error);
       });
-    };
-    this.messagesRef.limitToLast(20).on('child_added', onReceive);
+    }
+
+    innerFunc(cb, chatid, send_id)
   }
 
   // send the message to the Backend
@@ -64,7 +96,7 @@ class Backend {
 
   async set_topic_and_get_match(uid, topics) {
     try {
-      const url = this.root_url+ '/users/set_topic_and_get_match';
+      const url = this.root_url  + '/users/set_topic_and_get_match';
       let response = await fetch(url, {
         method:'POST',
         headers: {
@@ -88,7 +120,7 @@ class Backend {
 
   async set_political_leaning(uid, leaning_value) {
     try {
-      const url = this.root_url+'/users/set_political_leaning';
+      const url = this.root_url + '/users/set_political_leaning';
       let response = await fetch(url, {
         method:'POST',
         headers: {
@@ -159,7 +191,7 @@ class Backend {
     }
   }
 
-  async createChat() {
+  async createChat(user_id, matched_user_id) {
    try {
       const url = this.root_url + '/chats';
       let response = await fetch(url, {
@@ -168,9 +200,15 @@ class Backend {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
+        body: JSON.stringify({
+          chat: {
+            user_1: user_id,
+            user_2: matched_user_id
+          }
+        })
       });
       let res = await response.json();
-      return res.id
+      return res
     } catch(error) {
       console.error(error);
     }

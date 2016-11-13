@@ -11,6 +11,7 @@ import Backend from './Backend';
 
 export default class Chat extends React.Component {
   constructor(props) {
+    console.log("props", props);
     super(props);
     this.state = {messages: []};
     this.onSend = this.onSend.bind(this);
@@ -20,8 +21,8 @@ export default class Chat extends React.Component {
     this.setState({
       messages: [
         {
-          _id: 1,
-          text: 'Hello developer',
+          _id: 0,
+          text: 'Welcome you are in a discussion with ' + this.props.matched_user_name + '! The chosen topic for discussion is: ' + this.props.topic,
           createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
           user: {
             _id: 2,
@@ -39,7 +40,7 @@ export default class Chat extends React.Component {
       Backend.sendMessage({
         message: message.text,
         sender: message.user._id,
-        chat_id: this.state.chat_id
+        chat_id: this.state.chat_id,
       }).then(message_id => {
        console.log("message_id", message_id);
       })
@@ -105,21 +106,29 @@ export default class Chat extends React.Component {
   }
 
   componentDidMount() {
-    Backend.createChat().then(chat_id => {
-      console.log("chat_id", chat_id);
-      Backend.loadMessages((message) => {
+    AsyncStorage.getItem("user_id").then((user_id) => {
+      this.setState({"user_id": parseInt(user_id)});
+
+      Backend.createChat(user_id, this.props.matched_user).then((response) => {
+        console.log("createChat", response);
+        this.setState({chat_id: response.chat_id});
+
         this.setState((previousState) => {
           return {
-            messages: GiftedChat.append(previousState.messages, message),
+            messages: GiftedChat.append(previousState.messages, response.messages),
           };
         });
-      }, chat_id);
-    })
 
-
-    AsyncStorage.getItem("user_id").then((value) => {
-      console.log("chat", value);
-      this.setState({"user_id": parseInt(value)});
+        // polling
+        Backend.loadMessages((message) => {
+          this.setState((previousState) => {
+            console.log("chat loadmessages", message);
+            return {
+              messages: GiftedChat.append(previousState.messages, message),
+            };
+          });
+        }, response.chat_id, user_id);
+      })
     }).done();
 
 
