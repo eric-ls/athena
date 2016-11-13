@@ -97,5 +97,6 @@ export default class Chat extends React.Component {
       console.log("chat", value);
       this.setState({"user_id": parseInt(value)});
     }).done();
+    AsyncStorage.setItem("convo", "flagged");
   }
 }

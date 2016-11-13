@@ -64,6 +64,7 @@ export default class UserSlider extends Component {
     uid = this.state.user_id;
     // TODO: Write state.politicalLeaning to leaning variable in uid's row in backend DB
     Backend.set_political_leaning(uid, this.state.value);
+    AsyncStorage.setItem("political_lean", "flagged");
     Actions.topics({});
   }
 
