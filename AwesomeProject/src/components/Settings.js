@@ -69,7 +69,7 @@ export default class Settings extends Component {
           <Button
             styleDisabled={{opacity: 0.4}}
             style={s.button}
-            onPress={this._handleEndConversation} // Add Feedback Form
+            onPress={this._handleEndConversation}
             containerStyle={s.buttonContainerStyle}
             style={s.buttonTextStyle}
             >End Conversation</Button>
@@ -78,22 +78,25 @@ export default class Settings extends Component {
           ref={(popupDialog) => { this.popupDialog = popupDialog; }}
           dialogAnimation = { popupAnimation }
           onClosed={this._handleNextView}
-          dialogTitle={<DialogTitle title="Reminder" />}>
+          width={0.9}
+          dialogStyle={{borderRadius: 3}} >
           <View style={s.feedbackContainer}>
             <Text style={s.rateTitle}> Did you enjoy your conversation?</Text>
-            <Text style={s.rateTitle}> Stars </Text>
-            <Text style={s.rateTitle}> Tag it!</Text>
-            <Text style={s.rateTitle}> Tags</Text>
-              <Button
-                styleDisabled={{opacity: 0.4}}
-                style={s.buttons}
-                onPress={()=> {
-                  this.popupDialog.closeDialog();
-                  Actions.topics({type: "reset"});
-                }}
-                containerStyle={s.buttonContainerStyle}
-                style={s.buttonTextStyle}
-                >Submit</Button>
+            <View style={{flex: 2}}>
+              <Text style={s.rateItem}> Stars </Text>
+              <Text style={s.rateItem}> Tag it!</Text>
+              <Text style={s.rateItem}> Tags</Text>
+            </View>
+            <Button
+              styleDisabled={{opacity: 0.4}}
+              style={s.buttons}
+              onPress={()=> {
+                this.popupDialog.closeDialog();
+                Actions.topics({type: "reset"});
+              }}
+              containerStyle={s.buttonContainerStyle}
+              style={s.buttonTextStyle}
+            >Submit</Button>
           </View>
         </PopupDialog>
       </View>
@@ -103,8 +106,12 @@ export default class Settings extends Component {
 
 const s = StyleSheet.create({
   feedbackContainer: {
-    paddingTop: 60,
+    padding: 15,
+    paddingTop: 20,
+    borderRadius: 3,
     flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
   },
   settingsContainer: {
     paddingTop: 60,
@@ -117,14 +124,14 @@ const s = StyleSheet.create({
     alignItems: 'center',
   },
   name: {
-    fontSize: 28,
+    fontSize: 25,
     fontWeight: '600',
     color: '#3C4858',
-    marginBottom: 7,
+    marginBottom: 15,
   },
   profilePhoto: {
-    width: 150,
-    height: 150,
+    width: 140,
+    height: 140,
     marginBottom: 20,
     borderRadius: 7,
   },
@@ -147,12 +154,6 @@ const s = StyleSheet.create({
     height: 35,
     marginBottom: 10,
   },
-  scroll: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
   buttonBar: {
     padding: 10,
     paddingTop: 15,
@@ -163,6 +164,8 @@ const s = StyleSheet.create({
   },
   buttonContainerStyle: {
     padding: 10,
+    marginRight: 10,
+    marginLeft: 10,
     borderRadius: 2,
     backgroundColor: '#8E44AD',
     overflow: 'hidden',
@@ -171,23 +174,15 @@ const s = StyleSheet.create({
     fontSize: 20,
     color: 'white',
   },
-  topicItem: {
-    borderWidth: 1,
-    borderColor: '#EEE',
-    borderRadius: 3,
-    height: 100,
-    margin: 10,
-    width: Dimensions.get('window').width / 2 - 20,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  topicName: {
-    fontWeight: '700',
-  },
   rateTitle: {
     fontSize: 18,
     fontWeight: '700',
     textAlign: 'center',
     padding: 20,
+  },
+  rateItem: {
+    fontSize: 16,
+    textAlign: 'center',
+    padding: 10,
   }
 })
