@@ -21,10 +21,10 @@ class UsersController < ApplicationController
   end
 
   def set_topic_and_get_match
-    @user = User.find(set_topic_and_get_match_params[:id])
+    @user = User.find(params[:user][:id])
     @interested_topics = params[:user][:selected_topics] # hacky af
     @user.topics = Topic.where(name: @interested_topics)
-    @user.save
+    @user.save!
     respond_to do |format|
       format.json { render json: get_match(@user) }
     end

@@ -44,11 +44,13 @@ class Backend {
           message = responseJson.messages[i];
           console.log("response", responseJson);
           callback({
-            _id: message.id,
-            text: message.message,
-            createdAt: new Date(message.created_at),
+            _id: message._id,
+            text: message.text,
+            createdAt: message.created_at,
             user: {
-              _id: message.sender,
+              _id: message.user._id,
+              avatar: message.user.avatar,
+              name: message.user.name,
               // name: message.user.name, TODO: Add this.
             },
           });
@@ -189,7 +191,7 @@ class Backend {
     }
   }
 
-  async createChat() {
+  async createChat(user_id, matched_user_id) {
    try {
       const url = this.root_url + '/chats';
       let response = await fetch(url, {
@@ -198,9 +200,15 @@ class Backend {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
+        body: JSON.stringify({
+          chat: {
+            user_1: user_id,
+            user_2: matched_user_id
+          }
+        })
       });
       let res = await response.json();
-      return res.id
+      return res
     } catch(error) {
       console.error(error);
     }

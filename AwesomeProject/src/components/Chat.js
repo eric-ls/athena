@@ -11,8 +11,7 @@ import Backend from './Backend';
 
 export default class Chat extends React.Component {
   constructor(props) {
-    debugger;
-    console.log(props);
+    console.log("props", props);
     super(props);
     this.state = {messages: []};
     this.onSend = this.onSend.bind(this);
@@ -23,7 +22,7 @@ export default class Chat extends React.Component {
       messages: [
         {
           _id: 1,
-          text: 'Hello developer',
+          text: 'Welcome! The chosen topic for discussion is: ' + this.props.topic,
           createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
           user: {
             _id: 2,
@@ -107,17 +106,20 @@ export default class Chat extends React.Component {
   }
 
   componentDidMount() {
-
-
-
     AsyncStorage.getItem("user_id").then((user_id) => {
       this.setState({"user_id": parseInt(user_id)});
 
-      Backend.createChat().then((chat_id) => {
-        this.setState({chat_id: chat_id});
-        console.log("chat_id", chat_id);
-         console.log("user_id", user_id);
+      Backend.createChat(user_id, this.props.matched_user).then((response) => {
+        console.log("createChat", response);
+        this.setState({chat_id: response.chat_id});
 
+        this.setState((previousState) => {
+          return {
+            messages: GiftedChat.append(previousState.messages, response.messages),
+          };
+        });
+
+        // polling
         Backend.loadMessages((message) => {
           this.setState((previousState) => {
             console.log("chat loadmessages", message);
@@ -125,7 +127,7 @@ export default class Chat extends React.Component {
               messages: GiftedChat.append(previousState.messages, message),
             };
           });
-        }, chat_id, user_id);
+        }, response.chat_id, user_id);
       })
     }).done();
 

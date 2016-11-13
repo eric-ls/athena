@@ -31,15 +31,16 @@ export default class Topics extends Component {
     // TODO: Pass the array of selectedTopics to the Backend POST which will return a response body
     //        representing a match for this user to match with
     const response = Backend.set_topic_and_get_match(uid, this.state.selectedTopics);
-    console.log("match", response)
     // TODO: If matched_user is null, then we should do something.
-    const matched_user = response.match;
-    const topic_chosen = response.topic_chosen;
+    response.then((res) => {
+      const matched_user = res.match.id;
+      const topic_chosen = res.topic_chosen.name;
 
-    Actions.chat({
-      matched_user: matched_user,
-      topic: topic_chosen,
-    });
+      Actions.chat({
+        matched_user: matched_user,
+        topic: topic_chosen,
+      });
+    })
   }
 
   componentDidMount() {
