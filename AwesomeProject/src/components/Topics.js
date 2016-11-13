@@ -34,9 +34,11 @@ export default class Topics extends Component {
     // TODO: If matched_user is null, then we should do something.
     response.then((res) => {
       const matched_user = res.match.id;
+      const matched_user_name = res.match.first_name;
       const topic_chosen = res.topic_chosen.name;
 
       Actions.chat({
+        matched_user_name: matched_user_name,
         matched_user: matched_user,
         topic: topic_chosen,
       });

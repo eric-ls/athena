@@ -8,7 +8,13 @@
 
 
 User.create(first_name: "Arnie", last_name: "Li", email: "dsnadsn@gmail.com", token: "123", facebook_id: "69", political_leaning: 1)
-Topic.create(name: "Education")
+
+
+topics = ["Climate Change", "Guns", "Abortion", "Education", "Taxes", "Foreign Policy"]
+topics.each do |topic_name|
+  Topic.create(name: topic_name)
+end
+
 user = User.find_by(first_name: "Arnie")
 user.topics = Topic.where(name:"Education")
 user.save!

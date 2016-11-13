@@ -21,8 +21,8 @@ export default class Chat extends React.Component {
     this.setState({
       messages: [
         {
-          _id: 1,
-          text: 'Welcome! The chosen topic for discussion is: ' + this.props.topic,
+          _id: 0,
+          text: 'Welcome you are in a discussion with ' + this.props.matched_user_name + '! The chosen topic for discussion is: ' + this.props.topic,
           createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
           user: {
             _id: 2,
