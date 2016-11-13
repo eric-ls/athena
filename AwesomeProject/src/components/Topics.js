@@ -9,14 +9,21 @@ import {
   Dimensions,
   AsyncStorage,
 } from 'react-native'
+import PopupDialog, {
+  DialogTitle,
+  SlideAnimation,
+  DialogButton
+} from 'react-native-popup-dialog';
 import { Actions } from 'react-native-router-flux';
 import Button from 'react-native-button';
 import Backend from './Backend';
 
+const popupAnimation = new SlideAnimation({ slideFrom: 'bottom' });
+
 export default class Topics extends Component {
   constructor(props) {
     super(props);
-    this.state = { selectedTopics: [] };
+    this.state = { selectedTopics: [], dialogIsOpen: false };
   }
 
   _handleNextView = () => {
@@ -69,6 +76,11 @@ export default class Topics extends Component {
     }
   }
 
+  openPopupDialog = () => {
+    this.state.dialogIsOpen = true;
+    this.popupDialog.openDialog();
+  }
+
   render() {
     let topics = this.topics.map((topic, index) => {
       let icon = this.imgurl[topic];
@@ -95,11 +107,31 @@ export default class Topics extends Component {
             disabled={this.state.selectedTopics.length == 0}
             styleDisabled={{opacity: 0.4}}
             style={s.button}
-            onPress={this._handleNextView}
+            onPress={this.openPopupDialog}
             containerStyle={s.buttonContainerStyle}
             style={s.buttonTextStyle}
             >Proceed to chat</Button>
         </View>
+        <PopupDialog
+          ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+          dialogAnimation = { popupAnimation }
+          onClosed={this._handleNextView}
+          dialogTitle={<DialogTitle title="Reminder" />}
+          actions={[
+            <DialogButton
+              text="PROCEED TO CHAT"
+              onPress={() => {
+                this.state.dialogIsOpen = false;
+                this.popupDialog.closeDialog();
+              }}
+              key="button-1"
+            />,
+          ]}
+        >
+          <View>
+            <Text>A compliment a day keeps a smile on all our faces :)</Text>
+          </View>
+        </PopupDialog>
       </View>
     );
   }
