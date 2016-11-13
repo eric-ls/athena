@@ -98,7 +98,6 @@ export default class Chat extends React.Component {
         renderMessageText={this.renderMessageText}
         renderSend={this.renderSend}
         user={{
-          _id: 1,
           _id: this.state.user_id,
         }}
       />
