@@ -8,6 +8,7 @@ import Landing from './components/Landing';
 import Settings from './components/Settings';
 import Topics from './components/Topics';
 import ProfilePage from './components/Profile';
+import Feedback from './components/Feedback';
 
 export default class App extends React.Component {
   render() {
@@ -46,6 +47,10 @@ export default class App extends React.Component {
             key='profile'
             // title='Profile'
             component={ProfilePage} />
+          <Scene
+            key='feedback'
+            title='Feedback'
+            component={Feedback} />
         </Scene>
       </Router>
     );

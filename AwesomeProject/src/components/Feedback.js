@@ -14,7 +14,7 @@ import { Actions } from 'react-native-router-flux';
 import Button from 'react-native-button';
 import Backend from './Backend';
 
-export default class Settings extends Component {
+export default class Feedback extends Component {
   constructor(props) {
     super(props);
     this.state = { current_chat: "" };
@@ -33,8 +33,8 @@ export default class Settings extends Component {
       }
   }
 
-  _handleEndConversation = () => {
-    Actions.feedback({});
+  _handleSubmit = () => {
+    Actions.topics({});
   }
 
   // lets make this entire function async doe LOL #nhamena
@@ -49,30 +49,25 @@ export default class Settings extends Component {
 
   render() {
     return (
-      <View style={s.settingsContainer}>
-        <View style={s.profileContainer}>
-          <Text style={s.name}>{this.state.current_chat.name}</Text>
-          <Image
-            source={{uri: this.state.current_chat.avatar}}
-            style={s.profilePhoto} />
-        </View>
-        <View style={s.break}/>
-        <View style={s.buttons}>
-          <Button
+      <View style={s.feedbackContainer}>
+        <Text style={s.rateTitle}> Did you enjoy your conversation?</Text>
+        <Text style={s.rateTitle}> Stars </Text>
+        <Text style={s.rateTitle}> Tag it!</Text>
+        <Text style={s.rateTitle}> Tags</Text>
+         <Button
             styleDisabled={{opacity: 0.4}}
             style={s.button}
-            onPress={this._handleEndConversation} // Add Feedback Form
+            onPress={this._handleSubmit}
             containerStyle={s.buttonContainerStyle}
             style={s.buttonTextStyle}
-            >End Conversation</Button>
-        </View>
+            >Submit</Button>
       </View>
     );
   }
 }
 
 const s = StyleSheet.create({
-  settingsContainer: {
+  feedbackContainer: {
     paddingTop: 60,
     flex: 1,
   },
@@ -102,7 +97,7 @@ const s = StyleSheet.create({
   buttons: {
     flex:1,
   },
-  topicTitle: {
+  rateTitle: {
     fontSize: 18,
     fontWeight: '700',
     textAlign: 'center',
