@@ -51,7 +51,10 @@ class Backend {
   // send user data to the Backend to get a User Object back
   async sendUserData(first_name, email, facebook_id, token) {
    try {
-      const url = 'http://localhost:3000/users';
+      console.log("token", token);
+      // Heroku server:
+      const url = 'https://tranquil-sands-22048.herokuapp.com/users';
+      // const url = 'http://localhost:3000/users';
       let response = await fetch(url, {
         method:'POST',
         headers: {

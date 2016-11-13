@@ -11,9 +11,9 @@ class ChatsController < ApplicationController
       @full_message_metadata = Array.new()
       @messages.each do |message|
         metadata = Hash.new
-        metadata.['message'] = message.message
-        metadata.['sender'] = message.sender
-        metadata.['timestamp'] = message.created_at
+        metadata['message'] = message.message
+        metadata['sender'] = message.sender
+        metadata['timestamp'] = message.created_at
         @full_message_metadata.push(metadata)
       end
       render json: {
