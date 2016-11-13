@@ -3,4 +3,6 @@ Rails.application.routes.draw do
   resources :messages
   resources :chats
   resources :users
+
+  post '/users/set_political_leaning', to: 'users#set_political_leaning'
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161113002421) do
+ActiveRecord::Schema.define(version: 20161113015206) do
 
   create_table "chats", force: :cascade do |t|
     t.integer  "user_1"
@@ -27,15 +27,29 @@ ActiveRecord::Schema.define(version: 20161113002421) do
     t.integer  "chat_id"
   end
 
+  create_table "topics", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "topics_users", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "topic_id"
+    t.index ["topic_id"], name: "index_topics_users_on_topic_id"
+    t.index ["user_id"], name: "index_topics_users_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
     t.string   "img_path"
     t.string   "token"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.string   "facebook_id"
+    t.float    "political_leaning"
   end
 
 end
