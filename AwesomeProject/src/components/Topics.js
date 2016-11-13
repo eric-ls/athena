@@ -93,26 +93,41 @@ export default class Topics extends Component {
       )
     })
 
+    let popup = (
+      <PopupDialog
+        ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+        dialogAnimation = { popupAnimation }
+        onClosed={this._handleNextView}
+        width={0.9}
+        dialogStyle={{borderRadius: 3,}}
+        actions={[
+
+        ]} >
+        <View style={s.popupContainer}>
+          <View style={{flex: 1}}>
+            <Image source={require('../img/smile.png')} style={{width: 50, height: 50, alignSelf: 'center'}} />
+            <Text style={s.popupTitle}>A Friendly Reminder</Text>
+            <View style={{flex: 1,}}>
+              <Text style={s.popupText}>• Remember that there's another person behind the screen</Text>
+              <Text style={s.popupText}>• Don't resort to personal attacks</Text>
+              <Text style={s.popupText}>• Keep an open mind to new ideas</Text>
+            </View>
+          </View>
+          <Button
+            onPress={() => {
+              this.state.dialogIsOpen = false;
+              this.popupDialog.closeDialog();
+            }}
+            key="topic-dialog-button"
+            containerStyle={s.popupButtonContainerStyle}
+            style={s.buttonTextStyle}
+          >Start Chatting!</Button>
+        </View>
+      </PopupDialog>
+    )
+
     return (
       <View style={s.topicContainer}>
-        <PopupDialog
-          ref={(popupDialog) => { this.popupDialog = popupDialog; }}
-          dialogAnimation = { popupAnimation }
-          onClosed={this._handleNextView}
-          actions={[
-            <DialogButton
-              text="CLOSE"
-              onPress={() => {
-                this.popupDialog.closeDialog();
-              }}
-              key="button-1"
-            />,
-          ]}
-        >
-          <View>
-            <Text>Hello!!!!!!!!!!!!!!!</Text>
-          </View>
-        </PopupDialog>
         <Text style={s.topicTitle}>Choose some topics you want to talk about</Text>
         <ScrollView>
           <View style={s.scroll}>
@@ -123,31 +138,12 @@ export default class Topics extends Component {
           <Button
             disabled={this.state.selectedTopics.length == 0}
             styleDisabled={{opacity: 0.4}}
-            style={s.button}
             onPress={this.openPopupDialog}
             containerStyle={s.buttonContainerStyle}
             style={s.buttonTextStyle}
             >Proceed to chat</Button>
         </View>
-        <PopupDialog
-          ref={(popupDialog) => { this.popupDialog = popupDialog; }}
-          dialogAnimation = { popupAnimation }
-          onClosed={this._handleNextView}
-          dialogTitle={<DialogTitle title="Reminder" />}
-          actions={[
-            <DialogButton
-              text="PROCEED TO CHAT"
-              onPress={() => {
-                this.popupDialog.closeDialog();
-              }}
-              key="button-1"
-            />,
-          ]}
-        >
-          <View>
-            <Text>A compliment a day keeps a smile on all our faces :)</Text>
-          </View>
-        </PopupDialog>
+        {popup}
       </View>
     );
   }
@@ -235,5 +231,31 @@ const s = StyleSheet.create({
   },
   topicName: {
     fontWeight: '700',
-  }
+  },
+  popupContainer: {
+    padding: 15,
+    paddingTop: 25,
+    borderRadius: 3,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  },
+  popupTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#8E44AD',
+    textAlign: 'center',
+    marginTop: 20,
+    marginBottom: 15,
+  },
+  popupText: {
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  popupButtonContainerStyle: {
+    padding: 10,
+    borderRadius: 2,
+    backgroundColor: '#8E44AD',
+    overflow: 'hidden',
+  },
 })
