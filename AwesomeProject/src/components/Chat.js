@@ -110,6 +110,7 @@ export default class Chat extends React.Component {
       console.log("chat_id", chat_id);
       Backend.loadMessages((message) => {
         this.setState((previousState) => {
+          console.log("chat loadmessages", message);
           return {
             messages: GiftedChat.append(previousState.messages, message),
           };

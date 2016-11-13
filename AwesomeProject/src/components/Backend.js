@@ -16,20 +16,48 @@ class Backend {
   }
 
   // retrieve the messages from the Backend
-  loadMessages(callback) {
-    const onReceive = (data) => {
-      const message = data.val();
-      callback({
-        _id: data.key,
-        text: message.text,
-        createdAt: new Date(message.createdAt),
-        user: {
-          _id: message.user._id,
-          name: message.user.name,
-        },
+  loadMessages(cb, chatid) {
+    that = this;
+    count = 0;
+
+    innerFunc = function(callback, chat_id) {
+      console.log("calling loadMessages", callback);
+      console.log("calling loadMessages", chat_id);
+      console.log("calling loadMessages", count);
+
+      const url = that.root_url + '/chats/' + chat_id + '/new_messages';
+      console.log("calling loadMessages", url);
+      fetch(url, {
+        method:'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log("response", responseJson);
+        for (i = 0; i < responseJson.messages.length; i++) {
+          message = responseJson.messages[i];
+          callback({
+            _id: message.id,
+            text: message.message,
+            createdAt: new Date(message.created_at),
+            user: {
+              _id: message.sender,
+              // name: message.user.name, TODO: Add this.
+            },
+          });
+        }
+        count += 1;
+        setTimeout(innerFunc, 1000, callback, chat_id);
+      })
+      .catch((error) => {
+        console.error(error);
       });
-    };
-    this.messagesRef.limitToLast(20).on('child_added', onReceive);
+    }
+
+    innerFunc(cb, chatid)
   }
 
   // send the message to the Backend
