@@ -33,6 +33,7 @@ class Backend {
     };
     this.messagesRef.limitToLast(20).on('child_added', onReceive);
   }
+
   // send the message to the Backend
   sendMessage(message) {
     for (let i = 0; i < message.length; i++) {
@@ -43,10 +44,56 @@ class Backend {
       });
     }
   }
+
   // close the connection to the Backend
   closeChat() {
     if (this.messagesRef) {
       this.messagesRef.off();
+    }
+  };
+
+  async set_topic_and_get_match(uid, topics) {
+    try {
+      const url = 'http://localhost:3000/users/set_topic_and_get_match';
+      let response = await fetch(url, {
+        method:'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: {
+            id: uid,
+            selected_topics: topics,
+          }
+        })
+      });
+      let res = await response.json(); // get res.match res.topic_chosen
+      console.log("res", res); // TODO: This returns the user that you are about to talk to.
+      return res;
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
+  async set_political_leaning(uid, leaning_value) {
+    try {
+      const url = 'http://localhost:3000/users/set_political_leaning';
+      let response = await fetch(url, {
+        method:'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: {
+            id: uid,
+            political_leaning: leaning_value,
+          }
+        })
+      });
+    } catch(error) {
+      console.error(error);
     }
   }
 
