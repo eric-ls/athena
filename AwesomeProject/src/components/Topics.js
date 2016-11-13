@@ -100,9 +100,7 @@ export default class Topics extends Component {
         onClosed={this._handleNextView}
         width={0.9}
         dialogStyle={{borderRadius: 3,}}
-        actions={[
-
-        ]} >
+        >
         <View style={s.popupContainer}>
           <View style={{flex: 1}}>
             <Image source={require('../img/smile.png')} style={{width: 50, height: 50, alignSelf: 'center'}} />
