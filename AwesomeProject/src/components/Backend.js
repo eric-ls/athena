@@ -149,7 +149,22 @@ class Backend {
     }
   }
 
-
+  async createChat() {
+   try {
+      const url = this.root_url + '/chats';
+      let response = await fetch(url, {
+        method:'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      });
+      let res = await response.json();
+      return res.id
+    } catch(error) {
+      console.error(error);
+    }
+  }
 }
 
 export default new Backend();

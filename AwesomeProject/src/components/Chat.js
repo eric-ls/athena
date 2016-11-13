@@ -7,6 +7,7 @@ import { GiftedChat,
 import {
   AsyncStorage,
 } from 'react-native'
+import Backend from './Backend';
 
 export default class Chat extends React.Component {
   constructor(props) {
@@ -94,6 +95,18 @@ export default class Chat extends React.Component {
   }
 
   componentDidMount() {
+    Backend.createChat().then(chat_id => {
+      console.log("chat_id", chat_id);
+      Backend.loadMessages((message) => {
+        this.setState((previousState) => {
+          return {
+            messages: GiftedChat.append(previousState.messages, message),
+          };
+        });
+      }, chat_id);
+    })
+
+
     AsyncStorage.getItem("user_id").then((value) => {
       console.log("chat", value);
       this.setState({"user_id": parseInt(value)});
